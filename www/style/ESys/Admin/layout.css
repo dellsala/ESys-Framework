@@ -1,0 +1,176 @@
+/**
+ * Master Admin Layout
+ */
+
+body {
+    background-color: #CCC;
+}
+
+/**
+ * Header
+ */
+
+#header_container {
+    background-color: #333;
+    margin-bottom: 20px;
+}
+
+#header_container #header {
+    width: 800px;
+    height: 70px;
+    margin: 0 auto;
+    position: relative;
+    color: #FFF;
+}
+
+#header h1 {
+    line-height: 50px;
+}
+
+
+#header #header_menu {
+    position: absolute;
+    top: 45px;
+    right: 0px;
+}
+
+#header_menu a {
+    color: #FFF;
+}
+
+
+/**
+ * Module Layout
+ */
+
+#module_container {
+    width: 800px;
+    background-color: #FFF;
+    margin: 0 auto; 
+}
+
+#module_container #module_header {
+    background-image: url(images/header.gif);
+    height: 55px;
+    position: relative;
+}
+
+#module_header h1 {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: #FFF;
+    font-size: 20px;
+}
+
+#module_container #module_content {
+    padding: 20px;
+}
+
+#module_content .form_layout .label {
+    font-size: 10px;
+    color: #666;
+}
+
+.item_list th {
+    font-weight: normal;
+    text-align: left;
+    color: #666;
+    font-size: 10px;
+    padding-bottom: 8px;
+    line-height: 1.1em;
+    vertical-align: bottom;
+}
+
+
+.item_list tr.item {
+}
+
+.item_list .odd td  {
+    background-color: #DEF;
+}
+
+
+
+.item_list .item td {
+    padding: 0.2em 1.5em 0.2em 0.2em;
+    
+}
+
+.item_list .item h3 {
+    font-size: 14px;
+    margin: 0;
+}
+
+.item_list .item td.buttons {
+    padding-right: 15px;
+    white-space: nowrap;
+}
+
+.item_list .item .buttons .delete {
+    display: inline;
+    position: relative;
+    top: 2px;
+}
+
+.item_list .item .buttons a.edit {
+    color: #F30;
+    font-size: 10px;
+}
+
+.preview {
+}
+
+.preview .body ul {
+   list-style: disc;
+   margin: 0 0 .4em 0;
+   padding: 0 0 0 1.2em;
+}
+
+.preview .body a {
+    color: #009;
+}
+
+.message {
+    background-color: #EEE;
+    border: 1px solid #999;
+    margin-bottom: 0.7em;
+}
+
+.messageMargin {
+    padding: 5px;
+}
+
+.message .icon {
+    float: left;
+}
+
+.message .body {
+    margin-left: 42px;
+}
+
+.message .bodyEnd {
+    clear: left;
+}
+
+.message .warning {
+    background-color: #FFD;
+}
+
+.message .info {
+    background-color: #DFD;
+}
+
+.adminBlock {
+    padding: 10px;
+    border: 1px solid #CCC;
+    margin-bottom: 20px;
+    background-color: #EEE;
+}
+
+h2.adminBlockTitle {
+    font-weight: normal;
+    color: #666;
+    border-bottom: 1px solid #CCC;
+}
+

@@ -1,0 +1,115 @@
++----------------+
+| version 1.0.0  |
+| 2009-08-04     |
++----------------+
+
+*** MAJOR NEW VERSION ***
+
+This version represents a major change from previous
+versions. Assume no backwards compatibility. Biggest change
+is that the package name was changed from DSala to ESys. All
+code is now php5 STRICT and has basic docblocks to all
+library classes, public and protected methods for generating
+complete API docs. Unit tests for many library packages were
+also added. For the CHANGELOG notes before this version see
+the tagged version 0.12.0.
+
+
+-- MAJOR NEW FEATURES --
+
+* ESys_WebControl:
+    - totally revamped controller framework
+    - ESys_WebControl_Request: slighly cleaned up API from previous version
+    - ESys_WebControl_Response: represents an http response. 
+      several differnt types, extendable
+    - ESys_WebControl_Controller: now always returns a response objects. provides
+      authentication hooks. response format can be configured by setting a 
+      response factory
+    - ESys_WebControl_FrontController: also returns response objects and is
+      configurable via a response factory
+    - ESys_WebControl_ResponseFactory: responsible for creating responses of
+      different types. can be extended to provide application-wide response
+      formatting
+
+
+* esc_html(): global function declaration in ESys_Bootstrap
+
+* ESys_Data_Store:
+    - fetch() id argument is now required. Sql implementation of fetch() no longer returns 
+      a new record for empty id arguments. use fetchNew() directly instead
+
+* ESys_Data_Store_Sql: 
+    - now has a protected buildRecord which replaces getRecordClassName. 
+      this encapsulates the record instantiation. it also has a default behavior of 
+      instatiating a record class based on its own class name.
+
+* ESys_Template: 
+    - added getOptional, getRequired, and getRequiredObject methods for accessing, 
+      validating, and providing defaults for variabled with a template
+
+* ESys_Form: 
+    - New class for representing forms.
+
+* ESys_Validator_ErrorReport:
+    - wrapper class for ESys_Validator error data
+
+
+-- MINOR NEW FEATURES --
+
+* ESys_Image: 
+    - Added release function to destroy the image resource
+
+* ESys_Application: 
+    - added reset() method for clearing all data -- used during unit testing
+    - get method now throws a notice if you try to access an unregistered key
+
+* ESys_Bootstrap: 
+    - added initDatabaseConnection method for doing default database 
+      initialization, including logging if config setting is turned on
+
+* ESys_CommandLine_ErrorReporter: 
+    - class that can be attached as a listener to the main error reporter 
+      to print to STDERR on the command line whenever an error occurrs
+    - updated lib/bin/_bootstrap.php to use this
+
+* ESys_CrudBuider:
+    - updated to work with new framework
+
+* ESys_Html_FormBuilder: 
+    - now supports correct mapping of field names with square brackets to 
+      multidimensional input data
+
+* ESys_PHPUnit_TestSuiteBuilder:
+    - helper for creating test suites based on directory structure and
+      file name conventions
+
+* ESys_TestUtility_DBConnectionStub:
+    - class for stubbing ESys_DB_Connection objects  
+
+* ESys_Validator: 
+    - changed argument order of addRule--code argument is now last, 
+      and optional, defaulting to null. 
+    - removed getErrorFields, Codes, Messages methods. getErrorReport should be used instead
+
+* lib/bin/generate.php: 
+    - new cl script for doing code generation
+
+* deploy: 
+    - some minor tweaks to default deploy script and configuration
+
+-- BUG FIXES --
+
+* ESys_DB_Connection: 
+    - fixed bug in queryAndFetchAll. was returning a bad value
+
+* ESys_Text: 
+    - fixed some fatal syntax errors. function keywork was missing
+
+* ESys_Html_FormBuilder: 
+    - added "multiple" to the list of attributes that should be rendered without values
+    - added check that attribute argument is array -- non-array arg was causing all 
+      attributes generated automatically to be squashed
+
+* ESys_Admin: 
+    - fixed bug in templates/message.tpl.php where default empty message was throwing error
+

@@ -1,0 +1,75 @@
+/**
+ * DEFAULT STYLES
+ */
+
+body {
+   padding: 0;
+   margin: 0;
+   font-family: Verdana, Ariel, Helvetica, sans-serif;
+   font-size: 12px;
+   background-color: #FFF;
+   color: #000;
+   line-height: 1.4em;
+}
+
+p {
+   margin: 0 0 .8em 0;
+   padding: 0;
+   line-height: 1.4em;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+   margin: 0 0 .4em 0;
+   padding: 0;
+   line-height: 1em;
+}
+
+ul {
+   margin: 0 0 .4em 1.5em;
+   padding: 0;
+}
+
+ul li {
+   padding: 0;
+   margin: 0;
+}
+
+ol {
+   margin: 0 0 .4em 0;
+   padding: 0;
+}
+
+ol li {
+    padding: 0;
+    margin: 0 0 0 1.5em;
+}
+
+td {
+   padding: 0;
+   vertical-align: top;
+}
+
+a {
+   color: #000;
+   text-decoration: underline;
+}
+
+img {
+   border: 0;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+.clearer {
+Ê Ê clear: both;
+Ê Ê overflow: hidden;
+Ê Ê height: 0px;
+Ê Ê line-height: 0px;
+Ê Ê font-size: 0px;
+Ê Ê width: 100%;
+}
+
