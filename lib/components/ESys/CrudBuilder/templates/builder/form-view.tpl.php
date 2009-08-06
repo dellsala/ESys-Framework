@@ -1,6 +1,6 @@
 <?php
 
-$entity = isset($entity) ? $entity : null;
+$entity = $this->getRequired('entity');
 
 $primaryAttribute = $entity->primaryAttribute();
 
@@ -84,7 +84,7 @@ echo $messageView->fetch();
 ?>
         <td>
 <php> 
-                $date = new DateTime($<?php echo $entity->instanceName(); ?>->get('<?php echo $attribute->name(); ?>'));
+                $date = new DateTime($formData['<?php echo $attribute->name(); ?>']);
                 $dateInputView = new ESys_Template('ESys/Core/templates/date-input.tpl.php');
                 $dateInputView->set('date', $date);
                 $dateInputView->set('fieldName', '<?php echo $attribute->name(); ?>');

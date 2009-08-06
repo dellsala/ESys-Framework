@@ -1,6 +1,6 @@
 <?php
 
-$entity = isset($entity) ? $entity : null;
+$entity = $this->getRequired('entity');
 
 $primaryAttribute = $entity->primaryAttribute();
 
