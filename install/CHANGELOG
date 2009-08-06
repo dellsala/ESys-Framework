@@ -1,4 +1,22 @@
 +----------------+
+| version 1.0.1  |
+| 2009-08-06     |
++----------------+
+
+-- BUG FIXES --
+
+* ESys_WebControl_FrontController:
+    - Controllers assigned to the root path were not getting loaded
+
+* ESys_CrudBuilder:
+    - Some templates needed to be updated to use the new
+      getRequired/Optional syntax.
+    - Date field in form generation was accessing entity variable when it needed
+      use the formData variable.
+
+
+
++----------------+
 | version 1.0.0  |
 | 2009-08-04     |
 +----------------+
