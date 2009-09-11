@@ -1,0 +1,353 @@
+body {
+    text-align: center;
+    font-family: 'Helvetica',sans-serif;
+}
+
+a {
+    color: #009;
+}
+
+.layout_header_container {
+    text-align: center;
+    background-color: #333;
+    border-bottom: 2px solid #222;
+}
+
+.layout_header {
+    width: 900px;
+    margin: 0 auto;
+    text-align: left;
+    padding-top: 5px;
+    height: 45px;
+    position: relative;
+}
+
+.layout_header h1 {
+    font-weight: bold;
+    font-size: 20px;
+    color: #FFF;
+}
+
+.layout_content {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 900px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.main_menu {
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+    height: 27px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.main_menu li {
+    display: inline;
+}
+
+.main_menu li a {
+    float: left;
+    padding: 5px 8px;
+    height: 15px;
+    background-color: #555;
+    border: 1px solid #333;
+    border-color: #333 #333 #555 #333;
+    color: #999;
+    text-decoration: none;
+}
+
+.main_menu li a:hover {
+    background-color: #222;
+    border-color: #222 #222 #555 #222;
+}
+
+.main_menu li.selected a {
+    color: #000;
+    background-color: #FFF;
+    border-bottom: 1px solid #FFF;
+}
+
+.message {
+    border: 5px solid #CCC;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.message_warning{
+    background-color: #FFC;
+    border-color: #FE9;
+}
+
+.message_error{
+    background-color: #FCC;
+    border-color: #F99;
+}
+
+.message .icon {
+    float: left;
+    margin-right: 10px;
+}
+
+.message .body {
+    float: left;
+}
+
+.message .footer {
+    clear: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.content_block {
+    color: #333;
+    text-align: left;
+    margin: 0 auto;
+    padding: 15px;
+    border: 5px solid #DDD;
+    background-color: #EEE;
+    background-image: url("./images/background-gradient.gif");
+    background-repeat: repeat-x;
+    display: -moz-inline-box;
+    display: inline-block;
+}
+
+.content_block {
+    *display: inline;
+}
+
+.content_block .content_block {
+    display: block;
+    border: 1px solid #CCC; 
+    padding: 10px; 
+    margin: 0;
+    position: relative;
+    background-color: #F3F0F3;
+    background-image: none;
+}
+
+
+.content_title {
+    margin-bottom: 10px;
+}
+
+.content_title h1, .content_title h2 {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.content_title h3 {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.content_title p {
+    font-size: 11px;
+}
+
+.button {
+    background: transparent url("./images/button-right.gif") no-repeat scroll top right; 
+    display: inline-block;
+    height: 30px;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.button input {
+    height: 30px;
+    background: transparent url("./images/button-left.gif") no-repeat scroll top left; 
+    padding-left: 10px;
+    padding-right: 5px;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+}
+
+.button input:hover {
+    color: #070;
+}
+
+.small_button {
+    background: transparent url("./images/small-button-right.gif") no-repeat scroll top right; 
+    height: 20px;
+    line-height: 20px;
+    font-size: 11px;
+}
+
+.small_button input {
+    height: 20px;
+    background: transparent url("./images/small-button-left.gif") no-repeat scroll top left; 
+    line-height: 20px;
+}
+
+.form {
+}
+
+.form td {
+    vertical-align: top;
+}
+
+.form .horizontal_label {
+    color: #666;
+    font-weight: bold;
+    display: block;
+    text-align: right;
+    padding-right: 0.5em;
+    padding-top: 5px;
+    font-size: 11px;
+}
+
+.form .vertical_label {
+    color: #666;
+    font-weight: bold;
+    display: block;
+    font-size: 11px;
+}
+
+.form .vertical_small_label {
+    color: #666;
+    font-weight: bold;
+    display: block;
+    font-size: 10px;
+}
+
+.form .inline_label {
+    color: #666;
+    font-weight: bold;
+    display: inline;
+    font-size: 10px;
+}
+
+.form .field {
+    margin-bottom: 7px;
+}
+
+.form .field_value {
+    color: #000;
+}
+
+.form .horizontal_field_value {
+    color: #000;
+    padding: 0.3em 0;
+}
+
+
+.form .field_note {
+    font-size: 10px;
+    font-style: italic;
+}
+
+.form span.field_note {
+    margin-left: 0.5em;
+}
+
+
+.form div.field_note {
+    padding-top: 4px;
+}
+
+.form .check_list_field label {
+    font-size: 11px;
+}
+
+.form input.text,
+.form textarea {
+    background-color: #FFF;
+    border: 1px solid #999;
+    padding: 2px;
+    background-image: url('./images/field-shadow.gif');
+    background-repeat: repeat-x;
+}
+
+.form input.error,
+.form textarea.error,
+.form select.error {
+    background-image: url('./images/field-shadow-error.gif');
+    background-repeat: repeat-x;
+    background-color: #FFC;
+}
+
+.form .actions {
+    line-height: 30px;
+    padding-top: 5px;
+}
+
+.form .actions .button {
+    float: left;
+    margin-right: 10px;
+}
+
+.form .secondary_action {
+    color: #333;
+}
+
+.form .secondary_action:hover {
+    color: #E20;
+}
+
+.record_list {
+    text-align: left;
+    background-color: #FFF;
+    border: 1px solid #AAA;
+    border-width: 1px 1px 0px 1px;
+}
+
+.record_list th,
+.record_list td {
+    padding: 4px 6px;
+}
+
+.record_list th {
+    background-color: #EFEFEF;
+    vertical-align: bottom;
+    font-size: 11px;
+    font-weight: bold;
+    border-bottom: 1px solid #AAA;
+    color: #777;
+}
+
+.record_list td {
+    vertical-align: top;
+    border-bottom: 1px solid #AAA;
+    background-image: url('.images/field-shadow.gif');
+    background-repeat: repeat-x;
+    background-color: #FFF;
+}
+
+.record_list tr.even td {
+    background-image: url('./images/field-shadow-tinted.gif');
+    background-color: #EEF0ff;
+}
+
+.record_list tr:hover td {
+    background-image: none;
+    background-color: #CEC
+}
+
+.record_list .actions {
+    font-size: 11px;
+    padding: 4px 10px;
+    white-space: nowrap;
+}
+
+.record_list .actions .delete {
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+    top: 2px;
+}
+
+.record_list .actions .delete img {
+    display: block;
+}
+
+.record_list .actions .edit {
+    color: #E20;
+}
