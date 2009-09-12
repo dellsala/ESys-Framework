@@ -9,11 +9,23 @@ class ESys_Logger_ErrorReporterListener extends ESys_Logger
 {
 
 
+    protected $isLoggingBacktraces = false;
+
+
+    public function isLoggingBacktraces ($value = null)
+    {
+        if (is_null($value)) {
+            return $this->isLoggingBacktraces;
+        }
+        $this->isLoggingBacktraces = (boolean) $value;
+    }
+
+
     /**
      * @param array $notification
      * @return void
      */
-    function notify ($notification)
+    public function notify ($notification)
     {
         if ($notification['source'] != 'ESys_ErrorReporter') {
             return;
@@ -41,8 +53,35 @@ class ESys_Logger_ErrorReporterListener extends ESys_Logger
         }
         $message = $errorData['message'].' in '.$errorData['file'].' on line '.
             $errorData['line'];
+        if ($this->isLoggingBacktraces) {
+            $message .= "\n".$this->backtraceToString($notification['data']['backtrace']);
+        }
         $this->log("[{$level}] ".$message);
     }
+
+
+
+    /**
+     * @param array
+     * @return string
+     */
+    protected function backtraceToString ($backtraceArray) 
+    {
+        $string = '';
+        $backtraceArray = array_reverse($backtraceArray);
+        foreach ($backtraceArray as $trace) {
+            if (! array_key_exists('line', $trace)
+                || ! array_key_exists('file', $trace))
+            {
+                continue;
+            }
+            $string .= "\t" . 'on line '.$trace['line'] .
+                ' in file '.$trace['file'] . "\n";
+        }
+        return $string;
+    }
+
+
 
 
 }
