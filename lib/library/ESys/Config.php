@@ -102,6 +102,10 @@ class ESys_Config {
             (isset($coreData['logErrors'])) 
             ? ((boolean) $coreData['logErrors']) : true);
 
+        $this->set('ESys_Core', 'logErrorBacktraces', 
+            (isset($coreData['logErrorBacktraces'])) 
+            ? ((boolean) $coreData['logErrorBacktraces']) : false);
+
         $this->set('ESys_Core', 'productionMode',
             (isset($coreData['productionMode']))
             ? ((boolean) $coreData['productionMode']) : false);
