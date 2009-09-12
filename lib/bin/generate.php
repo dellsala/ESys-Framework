@@ -4,8 +4,7 @@
 require_once dirname(__FILE__).'/_bootstrap.php';
 require_once 'ESys/ArrayAccessor.php';
 require_once 'ESys/CrudBuilder/Builder.php';
-//require_once 'ESys/Scafolding/EntityAdminGenerator.php';
-//require_once 'ESys/Scafolding/ApplicationGenerator.php';
+require_once 'ESys/Scafolding/ApplicationGenerator.php';
 
 $args = new ESys_ArrayAccessor($_SERVER['argv']);
 
@@ -37,9 +36,16 @@ switch ($action) {
 
 
     case 'application':
-        //$generator = new ESys_Scafolding_ApplicationGenerator();
-        //$generator->generate();
-        echo "Application!\n";
+        $generator = new ESys_Scafolding_ApplicationGenerator();
+        if (! $packageName = $args->get(2)) {
+            echo "ERROR: missing package name argument.\n\n";
+            exit(1);
+        }
+        if (! $targetDirectory = $args->get(3)) {
+            echo "ERROR: missing target directory argument.\n\n";
+            exit(1);
+        }
+        $generator->generate($packageName, $targetDirectory);
         break;
 
 
