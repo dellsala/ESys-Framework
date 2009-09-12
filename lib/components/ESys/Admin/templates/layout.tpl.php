@@ -1,19 +1,18 @@
 <?php
 
-$appTitle = $this->getOptional('appTitle', 'Admin');
-$pageTitle = $this->getOptional('pageTitle', 'Untitled');
-$menu = $this->getOptional('menu', array());
 $head = $this->getOptional('head');
-$content = $this->getOptional('content', '_NO_CONTENT_');
+$content = $this->getRequired('content');
+$menu = $this->getRequired('menu');
+$selectedMenu = $this->getOptional('selectedMenu');
+$applicationTitle = $this->getRequired('applicationTitle');
+$documentTitle = $this->getRequired('documentTitle');
 
-$urlBase = ESys_Application::get('config')->get('urlBase');
-
+$urlBase = App::urlBase();
 
 ob_start();
 ?>
-<link rel="stylesheet" type="text/css" href="<?php echo $urlBase; ?>/style/ESys/Core/default.css">
-<link rel="stylesheet" type="text/css" href="<?php echo $urlBase; ?>/style/ESys/Admin/layout.css">
-<link rel="stylesheet" type="text/css" href="<?php echo $urlBase; ?>/style/ESys/Core/form-layout.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $urlBase; ?>/style/ESys/Core/reset.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $urlBase; ?>/style/ESys/Admin/style.css">
 <?php
 echo $head;
 $head = ob_get_clean();
@@ -21,34 +20,33 @@ $head = ob_get_clean();
 
 ob_start();
 ?>
-<div id="header_container">
-    <div id="header">
-        <h1><?php echo $appTitle; ?></h1>
-        <div id="header_menu">
+<div class="layout_header_container">
+    <div class="layout_header">
+        <h1><?php echo $applicationTitle; ?></h1>
+        <div class="main_menu">
+            <ul>
 <?php 
-    $menuHtml = array();
-    foreach ($menu as $label => $url) {
-        $menuHtml[] = '            <a href="'.htmlentities($url).'">'.htmlentities($label).'</a>';
-    }
-    echo implode(" | \n", $menuHtml);
+    foreach ($menu as $menuId => $item) :
+?>
+                <li<?php if ($menuId == $selectedMenu) { 
+                    echo ' class="selected"'; } ?>><a href="<?php 
+                    echo esc_html($item['url']); ?>"><?php echo esc_html($item['label']); ?></a></li>
+<?php
+    endforeach;
 ?> 
+            </ul>
         </div>
     </div>
 </div>
-<div id="module_container">
-    <div id="module_header">
-        <h1><?php echo $pageTitle; ?></h1>
-    </div>
-    <div id="module_content">
-        <?php echo $content; ?>
-    </div>
+<div class="layout_content">
+    <?php echo $content; ?>
 </div>
 <?php
 $body = ob_get_clean();
 
 
 $pageView = new ESys_Template('ESys/Core/templates/html.tpl.php');
-$pageView->set('title', $appTitle.' :: '.$pageTitle);
+$pageView->set('title', $documentTitle);
 $pageView->set('body', $body);
 $pageView->set('doctype', 'html-strict');
 $pageView->set('head', $head);
