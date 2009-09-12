@@ -4,7 +4,7 @@
 require_once dirname(__FILE__).'/_bootstrap.php';
 require_once 'ESys/ArrayAccessor.php';
 require_once 'ESys/CrudBuilder/Builder.php';
-require_once 'ESys/Scaffolding/ApplicationGenerator.php';
+require_once 'ESys/Scaffolding/Application/Generator.php';
 
 $args = new ESys_ArrayAccessor($_SERVER['argv']);
 
@@ -36,7 +36,7 @@ switch ($action) {
 
 
     case 'application':
-        $generator = new ESys_Scaffolding_ApplicationGenerator();
+        $generator = new ESys_Scaffolding_Application_Generator();
         if (! $packageName = $args->get(2)) {
             echo "ERROR: missing package name argument.\n\n";
             exit(1);

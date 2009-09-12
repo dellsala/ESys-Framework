@@ -3,7 +3,7 @@
 /**
  * @package ESys
  */
-class ESys_Scaffolding_ApplicationGenerator {
+class ESys_Scaffolding_Application_Generator {
 
 
     protected $templateDir;
