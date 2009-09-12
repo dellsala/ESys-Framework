@@ -99,6 +99,9 @@ class ESys_Bootstrap {
                 $errorLogger = new ESys_Logger_ErrorReporterListener($logFile, $logSession);
                 $errorReporter->addListener($errorLogger);
                 ESys_Application::set('errorLogger', $errorLogger);
+                if ($config->get('logErrorBacktraces')) {
+                    $errorLogger->isLoggingBacktraces(true);
+                }
             } else {
                 trigger_error(__CLASS__.'::'.__FUNCTION__.'(): log file is not writable. '.
                     'logging disabled.', E_USER_WARNING);
@@ -140,6 +143,23 @@ class ESys_Bootstrap {
         }
         ESys_Application::set('databaseConnection', $db);
     }
+
+
+    /**
+     * Sets up default session object.
+     *
+     * @param string Name of the session
+     * @return void
+     */
+    public static function initSession ($sessionName)
+    {
+        require_once 'ESys/Session.php';
+        $conf = ESys_Application::get('config');
+        $sessionSavePath = $conf->get('libPath').'/data/session/';
+        $session = new ESys_Session($sessionName, null, $sessionSavePath);
+        ESys_Application::set('session', $session);
+    }
+
 
 
 }
