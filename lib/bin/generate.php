@@ -3,7 +3,7 @@
 
 require_once dirname(__FILE__).'/_bootstrap.php';
 require_once 'ESys/ArrayAccessor.php';
-require_once 'ESys/Scaffolding/Entity/Builder.php';
+require_once 'ESys/Scaffolding/Entity/Generator.php';
 require_once 'ESys/Scaffolding/Application/Generator.php';
 
 $args = new ESys_ArrayAccessor($_SERVER['argv']);
@@ -15,7 +15,7 @@ switch ($action) {
 
 
     case 'entity':
-        $generator = new ESys_Scaffolding_Entity_Builder();
+        $generator = new ESys_Scaffolding_Entity_Generator();
         if (! $packageName = $args->get(2)) {
             echo "ERROR: missing package name argument.\n\n";
             exit(1);

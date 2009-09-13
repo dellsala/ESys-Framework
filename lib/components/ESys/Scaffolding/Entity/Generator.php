@@ -4,7 +4,7 @@ require_once 'ESys/DB/Reflector.php';
 require_once 'ESys/DB/Connection.php';
 require_once 'ESys/Scaffolding/Entity/Entity.php';
 
-class ESys_Scaffolding_Entity_Builder {
+class ESys_Scaffolding_Entity_Generator {
 
 
 	private $templateDir;
@@ -12,7 +12,7 @@ class ESys_Scaffolding_Entity_Builder {
 
 	public function __construct ()
 	{
-	    $this->templateDir = dirname(__FILE__).'/templates/builder';
+	    $this->templateDir = dirname(__FILE__).'/templates';
 	}
 
 
