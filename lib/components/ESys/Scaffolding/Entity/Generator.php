@@ -3,6 +3,8 @@
 require_once 'ESys/DB/Reflector.php';
 require_once 'ESys/DB/Connection.php';
 require_once 'ESys/Scaffolding/Entity/Entity.php';
+require_once 'ESys/Scaffolding/SourceTemplate.php';
+require_once 'ESys/Scaffolding/SourceFileWriter.php';
 
 class ESys_Scaffolding_Entity_Generator {
 
@@ -18,19 +20,10 @@ class ESys_Scaffolding_Entity_Generator {
 
     public function generate ($packageName, $tableName, $targetPath)
     {
-        if (! is_dir($targetPath)) {
-            trigger_error(__CLASS__.'::'.__FUNCTION__.
-                "() target directory '{$targetPath}' does not exist.",
-                E_USER_WARNING);
+        $fileWriter = new ESys_Scaffolding_SourceFileWriter();
+        if (! $fileWriter->setBaseDirectory($targetPath)) {
             return false;
         }
-        if (! is_writable($targetPath)) {
-            trigger_error(__CLASS__.'::'.__FUNCTION__.
-                "() target directory '{$targetPath}' is not writable.",
-                E_USER_WARNING);
-            return false;
-        }
-
         echo "getting database connection...\n";
         if (! $db = $this->getDatabaseConnection()) {
             trigger_error(__CLASS__.'::'.__FUNCTION__.
@@ -38,7 +31,6 @@ class ESys_Scaffolding_Entity_Generator {
                 E_USER_WARNING);
             return false;
         }
-
         echo "intializing entity...\n";
         if (! $entity = $this->createEntity($tableName, $packageName, $db)) {
             trigger_error(__CLASS__.'::'.__FUNCTION__.
@@ -46,111 +38,89 @@ class ESys_Scaffolding_Entity_Generator {
                 E_USER_WARNING);
             return false;
         }
-
         echo "building controller...\n";
-        if (! $this->generateController($entity, $targetPath)) {
+        if (! $this->generateController($entity, $fileWriter)) {
             return false;
         }
         echo "building model...\n";
-        if (! $this->generateModel($entity, $targetPath)) {
+        if (! $this->generateModel($entity, $fileWriter)) {
             return false;
         }
         echo "building form...\n";
-        if (! $this->generateForm($entity, $targetPath)) {
+        if (! $this->generateForm($entity, $fileWriter)) {
             return false;
         }
         echo "building list view...\n";
-        if (! $this->generateListView($entity, $targetPath)) {
+        if (! $this->generateListView($entity, $fileWriter)) {
             return false;
         }
         echo "building form view...\n";
-        if (! $this->generateFormView($entity, $targetPath)) {
+        if (! $this->generateFormView($entity, $fileWriter)) {
             return false;
         }
-        
         return true;
     }
 
 
-	protected function generateModel ($entity, $targetPath) 
+	protected function generateModel ($entity, $fileWriter) 
 	{
-		$view = new ESys_Template($this->templateDir.'/model.tpl.php');
+		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/model.tpl.php');
 		$view->set('entity', $entity);
-		$modelSource = self::parsePhpTags($view->fetch());
-		$modelFilePath = $targetPath.'/'.$entity->fileName();
-		if (! $this->writeSourceFile($modelFilePath, $modelSource)) {
+		$modelSource = $view->fetch();
+		$modelFilePath = $entity->fileName();
+		if (! $fileWriter->write($modelFilePath, $modelSource)) {
 		    return false;
 		}
         return true;		
 	}
 
 
-	protected function generateForm ($entity, $targetPath) 
+	protected function generateForm ($entity, $fileWriter) 
 	{
-		$view = new ESys_Template($this->templateDir.'/form.tpl.php');
+		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/form.tpl.php');
 		$view->set('entity', $entity);
-		$formSource = self::parsePhpTags($view->fetch());
-		if (! $this->prepareTargetSubDirectory(
-		    $targetPath, $this->getAdminPackagePath($entity))) 
-		{
-		    return false;
-		}
-		$formFilePath = $targetPath.'/'.$this->getAdminPackagePath($entity).'/Form.php';
-		if (! $this->writeSourceFile($formFilePath, $formSource)) {
+		$formSource = $view->fetch();
+		$formFilePath = $this->getAdminPackagePath($entity).'/Form.php';
+		if (! $fileWriter->write($formFilePath, $formSource)) {
 		    return false;
 		}
         return true;		
 	}
 
 
-	protected function generateController ($entity, $targetPath) 
+	protected function generateController ($entity, $fileWriter) 
 	{
-		$view = new ESys_Template($this->templateDir.'/controller.tpl.php');
+		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/controller.tpl.php');
 		$view->set('entity', $entity);
-		$controllerSource = self::parsePhpTags($view->fetch());
-		if (! $this->prepareTargetSubDirectory(
-		    $targetPath, $this->getAdminPackagePath($entity))) 
-		{
-		    return false;
-		}
-		$controllerFilePath = $targetPath.'/'.$this->getAdminPackagePath($entity).'/Controller.php';
-		if (! $this->writeSourceFile($controllerFilePath, $controllerSource)) {
+		$controllerSource = $view->fetch();
+		$controllerFilePath = $this->getAdminPackagePath($entity).'/Controller.php';
+		if (! $fileWriter->write($controllerFilePath, $controllerSource)) {
 		    return false;
 		}
         return true;		
 	}
 
 
-	protected function generateListView ($entity, $targetPath) 
+	protected function generateListView ($entity, $fileWriter) 
 	{
-		$view = new ESys_Template($this->templateDir.'/list-view.tpl.php');
+		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/list-view.tpl.php');
 		$view->set('entity', $entity);
-		$listViewSource = self::parsePhpTags($view->fetch());
-		$listViewFilePath = $targetPath.'/'.$this->getAdminPackagePath($entity).'/templates/list.tpl.php';
-		if (! $this->prepareTargetSubDirectory(
-		    $targetPath, $this->getAdminPackagePath($entity).'/templates')) 
-		{
-		    return false;
-		}
-		if (! $this->writeSourceFile($listViewFilePath, $listViewSource)) {
+		$listViewSource = $view->fetch();
+		$listViewFilePath = $this->getAdminPackagePath($entity).'/templates/list.tpl.php';
+		if (! $fileWriter->write($listViewFilePath, $listViewSource)) {
 		    return false;
 		}
         return true;		
 	}
 
 
-	protected function generateFormView ($entity, $targetPath) 
+	protected function generateFormView ($entity, $fileWriter) 
 	{
-		$view = new ESys_Template($this->templateDir.'/form-view.tpl.php');
+		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/form-view.tpl.php');
 		$view->set('entity', $entity);
-		$formViewSource = self::parsePhpTags($view->fetch());
-		$formViewFilePath = $targetPath.'/'.$this->getAdminPackagePath($entity).'/templates/form.tpl.php';
-		if (! $this->prepareTargetSubDirectory(
-		    $targetPath, $this->getAdminPackagePath($entity).'/templates')) 
-		{
-		    return false;
-		}
-		if (! $this->writeSourceFile($formViewFilePath, $formViewSource)) {
+		$formViewSource = $view->fetch();
+		$formViewFilePath = $this->getAdminPackagePath($entity).'/templates/form.tpl.php';
+		if (! $fileWriter->write($formViewFilePath, $formViewSource)) {
 		    return false;
 		}
         return true;		
@@ -167,32 +137,6 @@ class ESys_Scaffolding_Entity_Generator {
 			return false;
 		}
 		return new ESys_Scaffolding_Entity_Entity($table, $packageName);
-	}
-
-
-	public static function pluralize ($string)
-	{
-		$lastLetter = $string[strlen($string)-1];
-		switch ($lastLetter) {
-			case 'y':
-				$string = substr_replace($string, 'ies', -1);
-			break;
-			case 's':
-				$string = $string .= 'es';
-			break;
-			default :
-				$string .= 's';
-			break;
-		}
-		return $string;
-	}
-
-
-	protected static function parsePhpTags ($string) 
-	{
-		$string = str_replace('<php>', '<?php', $string);
-		$string = str_replace('</php>', '?'.'>', $string);
-		return $string;
 	}
 
 
@@ -214,51 +158,11 @@ class ESys_Scaffolding_Entity_Generator {
     }
 
 
-
     protected function getAdminPackagePath ($entity)
     {
 		$adminPackageName = $entity->packageName().'_AdminApp_'.ucfirst($entity->instanceName());
 		return str_replace('_', '/', $adminPackageName);
     }
 
-
-
-    protected function writeSourceFile ($fileName, $source)
-    {
-        if (file_exists($fileName)) {
-            trigger_error(__CLASS__.'::'.__FUNCTION__.
-                '(): unable to create file. file already exists.',
-                E_USER_WARNING);
-            return false;
-        }
-        if (file_put_contents($fileName, $source) === false) {
-            return false;
-        }
-        chmod($fileName, 0666);
-        return true;
-    }
-
-
-
-    protected function prepareTargetSubDirectory ($baseDirectory, $subDirectory)
-    {
-        $subDirectoryPartList = explode('/', $subDirectory);
-        $targetDirectory = $baseDirectory;
-        foreach ($subDirectoryPartList as $subDirectoryPart) {
-            $targetDirectory .= '/'.$subDirectoryPart;
-            if (! file_exists($targetDirectory) && ! mkdir($targetDirectory)) {
-                trigger_error(__CLASS__.'::'.__FUNCTION__.'(): '.
-                    "failed to create directory ".$targetDirectory, E_USER_WARNING);
-                return false;
-            }
-            if (! is_dir($targetDirectory)) {
-                trigger_error(__CLASS__.'::'.__FUNCTION__.'(): '.
-                    "target directory {$targetDirectory} already exists as a file", E_USER_WARNING);
-                return false;
-            }
-            chmod($targetDirectory, 0777);
-        }
-        return true;
-   }
 
 }
