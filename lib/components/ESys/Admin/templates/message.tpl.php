@@ -31,11 +31,11 @@ $urlBase = ESys_Application::get('config')->get('urlBase');
 
 
 ?>
-<div class="message"><div class="messageMargin <?php echo $class; ?>">
+<div class="message message_<?php echo $class; ?>">
     <img src="<?php echo $urlBase.$icon; ?>" class="icon" 
         height="32" width="32" alt="<?php echo $class; ?>">
     <div class="body">
 <?php echo $message->getContent(); ?> 
     </div>
-    <div class="bodyEnd"></div>
-</div></div>
+    <div class="footer"></div>
+</div>
