@@ -2,15 +2,17 @@
 
 require_once 'ESys/DB/Reflector.php';
 require_once 'ESys/DB/Connection.php';
-require_once 'ESys/CrudBuilder/Entity.php';
+require_once 'ESys/Scaffolding/Entity/Entity.php';
 
-class ESys_CrudBuilder_Builder {
+class ESys_Scaffolding_Entity_Builder {
 
 
-	private $templateDir = 'ESys/CrudBuilder/templates/builder';
+	private $templateDir;
+
 
 	public function __construct ()
 	{
+	    $this->templateDir = dirname(__FILE__).'/templates/builder';
 	}
 
 
@@ -164,7 +166,7 @@ class ESys_CrudBuilder_Builder {
 			    '(): requested table does not exist', E_USER_ERROR);
 			return false;
 		}
-		return new ESys_CrudBuilder_Entity($table, $packageName);
+		return new ESys_Scaffolding_Entity_Entity($table, $packageName);
 	}
 
 

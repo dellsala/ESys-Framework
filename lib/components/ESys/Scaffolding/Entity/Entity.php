@@ -1,6 +1,6 @@
 <?php
 
-class ESys_CrudBuilder_Entity {
+class ESys_Scaffolding_Entity_Entity {
 
 
 	private $table;
@@ -74,15 +74,15 @@ class ESys_CrudBuilder_Entity {
 		);
 		foreach ($primaryFieldNameList as $fieldName) {
             if (array_key_exists($fieldName, $indexedColumnList)) {
-                return new ESys_CrudBuilder_Entity_Attribute($indexedColumnList[$fieldName]);
+                return new ESys_Scaffolding_Entity_Entity_Attribute($indexedColumnList[$fieldName]);
             }
         }
 		foreach ($indexedColumnList as $column) {
 			if ($column->getType() == 'VARCHAR') {
-				return new ESys_CrudBuilder_Entity_Attribute($column);
+				return new ESys_Scaffolding_Entity_Entity_Attribute($column);
 			}
 		}
-		return new ESys_CrudBuilder_Entity_Attribute($indexedColumnList['id']);
+		return new ESys_Scaffolding_Entity_Entity_Attribute($indexedColumnList['id']);
 	}
 
 
@@ -92,7 +92,7 @@ class ESys_CrudBuilder_Entity {
 		$attributeList = array();
 		foreach ($columnList as $column) {
 			if ($column->getType() != 'TIMESTAMP') {
-				$attributeList[] = new ESys_CrudBuilder_Entity_Attribute($column);
+				$attributeList[] = new ESys_Scaffolding_Entity_Entity_Attribute($column);
 			}
 		}
 		return $attributeList;
@@ -102,7 +102,7 @@ class ESys_CrudBuilder_Entity {
 
 
 
-class ESys_CrudBuilder_Entity_Attribute {
+class ESys_Scaffolding_Entity_Entity_Attribute {
 
 
 	private $column;
