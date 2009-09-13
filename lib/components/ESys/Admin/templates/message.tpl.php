@@ -8,15 +8,15 @@ if (! ($message instanceof ESys_Message)) {
 
 $messageStyle = array(
     'esys_message_info' => array(
-        'icon' => '/style/ESys/Core/images/icon-ok.gif',
+        'icon' => 'icon-ok.gif',
         'class' => 'info',
     ),
     'esys_message_warning' => array(
-        'icon' => '/style/ESys/Core/images/icon-warning.gif',
+        'icon' => 'icon-warning.gif',
         'class' => 'warning',
     ),
     'esys_message_error' => array(
-        'icon' => '/style/ESys/Core/images/icon-error.gif',
+        'icon' => 'icon-error.gif',
         'class' => 'error'
     ),
 );
@@ -32,7 +32,7 @@ $urlBase = ESys_Application::get('config')->get('urlBase');
 
 ?>
 <div class="message message_<?php echo $class; ?>">
-    <img src="<?php echo $urlBase.$icon; ?>" class="icon" 
+    <img src="<?php echo $urlBase.'/style/ESys/Admin/images/'.$icon; ?>" class="icon" 
         height="32" width="32" alt="<?php echo $class; ?>">
     <div class="body">
 <?php echo $message->getContent(); ?> 
