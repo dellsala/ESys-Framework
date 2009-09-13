@@ -316,7 +316,7 @@ a {
 .record_list td {
     vertical-align: top;
     border-bottom: 1px solid #AAA;
-    background-image: url('.images/field-shadow.gif');
+    background-image: url('./images/field-shadow.gif');
     background-repeat: repeat-x;
     background-color: #FFF;
 }
