@@ -5,6 +5,7 @@ require_once 'ESys/DB/Connection.php';
 require_once 'ESys/Scaffolding/Entity/Entity.php';
 require_once 'ESys/Scaffolding/SourceTemplate.php';
 require_once 'ESys/Scaffolding/SourceFileWriter.php';
+require_once 'ESys/Scaffolding/Package.php';
 
 class ESys_Scaffolding_Entity_Generator {
 
@@ -18,12 +19,15 @@ class ESys_Scaffolding_Entity_Generator {
 	}
 
 
-    public function generate ($packageName, $tableName, $targetPath)
+    public function generate ($package, $tableName, $targetPath)
     {
         $fileWriter = new ESys_Scaffolding_SourceFileWriter();
         if (! $fileWriter->setBaseDirectory($targetPath)) {
             return false;
         }
+
+        $package = new ESys_Scaffolding_Package($package);
+        
         echo "getting database connection...\n";
         if (! $db = $this->getDatabaseConnection()) {
             trigger_error(__CLASS__.'::'.__FUNCTION__.
@@ -32,37 +36,37 @@ class ESys_Scaffolding_Entity_Generator {
             return false;
         }
         echo "intializing entity...\n";
-        if (! $entity = $this->createEntity($tableName, $packageName, $db)) {
+        if (! $entity = $this->createEntity($tableName, $package->base(), $db)) {
             trigger_error(__CLASS__.'::'.__FUNCTION__.
                 "() unable to prepare entity.",
                 E_USER_WARNING);
             return false;
         }
         echo "building controller...\n";
-        if (! $this->generateController($entity, $fileWriter)) {
+        if (! $this->generateController($entity, $package, $fileWriter)) {
             return false;
         }
         echo "building model...\n";
-        if (! $this->generateModel($entity, $fileWriter)) {
+        if (! $this->generateModel($entity, $package, $fileWriter)) {
             return false;
         }
         echo "building form...\n";
-        if (! $this->generateForm($entity, $fileWriter)) {
+        if (! $this->generateForm($entity, $package, $fileWriter)) {
             return false;
         }
         echo "building list view...\n";
-        if (! $this->generateListView($entity, $fileWriter)) {
+        if (! $this->generateListView($entity, $package, $fileWriter)) {
             return false;
         }
         echo "building form view...\n";
-        if (! $this->generateFormView($entity, $fileWriter)) {
+        if (! $this->generateFormView($entity, $package, $fileWriter)) {
             return false;
         }
         return true;
     }
 
 
-	protected function generateModel ($entity, $fileWriter) 
+	protected function generateModel ($entity, $package, $fileWriter) 
 	{
 		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/model.tpl.php');
 		$view->set('entity', $entity);
@@ -75,12 +79,13 @@ class ESys_Scaffolding_Entity_Generator {
 	}
 
 
-	protected function generateForm ($entity, $fileWriter) 
+	protected function generateForm ($entity, $package, $fileWriter) 
 	{
 		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/form.tpl.php');
 		$view->set('entity', $entity);
+		$view->set('package', $package);
 		$formSource = $view->fetch();
-		$formFilePath = $this->getAdminPackagePath($entity).'/Form.php';
+		$formFilePath = $this->getAdminPackagePath($package, $entity).'/Form.php';
 		if (! $fileWriter->write($formFilePath, $formSource)) {
 		    return false;
 		}
@@ -88,12 +93,13 @@ class ESys_Scaffolding_Entity_Generator {
 	}
 
 
-	protected function generateController ($entity, $fileWriter) 
+	protected function generateController ($entity, $package, $fileWriter) 
 	{
 		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/controller.tpl.php');
 		$view->set('entity', $entity);
+		$view->set('package', $package);
 		$controllerSource = $view->fetch();
-		$controllerFilePath = $this->getAdminPackagePath($entity).'/Controller.php';
+		$controllerFilePath = $this->getAdminPackagePath($package, $entity).'/Controller.php';
 		if (! $fileWriter->write($controllerFilePath, $controllerSource)) {
 		    return false;
 		}
@@ -101,12 +107,12 @@ class ESys_Scaffolding_Entity_Generator {
 	}
 
 
-	protected function generateListView ($entity, $fileWriter) 
+	protected function generateListView ($entity, $package, $fileWriter) 
 	{
 		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/list-view.tpl.php');
 		$view->set('entity', $entity);
 		$listViewSource = $view->fetch();
-		$listViewFilePath = $this->getAdminPackagePath($entity).'/templates/list.tpl.php';
+		$listViewFilePath = $this->getAdminPackagePath($package, $entity).'/templates/list.tpl.php';
 		if (! $fileWriter->write($listViewFilePath, $listViewSource)) {
 		    return false;
 		}
@@ -114,12 +120,12 @@ class ESys_Scaffolding_Entity_Generator {
 	}
 
 
-	protected function generateFormView ($entity, $fileWriter) 
+	protected function generateFormView ($entity, $package, $fileWriter) 
 	{
 		$view = new ESys_Scaffolding_SourceTemplate($this->templateDir.'/form-view.tpl.php');
 		$view->set('entity', $entity);
 		$formViewSource = $view->fetch();
-		$formViewFilePath = $this->getAdminPackagePath($entity).'/templates/form.tpl.php';
+		$formViewFilePath = $this->getAdminPackagePath($package, $entity).'/templates/form.tpl.php';
 		if (! $fileWriter->write($formViewFilePath, $formViewSource)) {
 		    return false;
 		}
@@ -127,7 +133,7 @@ class ESys_Scaffolding_Entity_Generator {
 	}
 
 
-	protected function createEntity ($tableName, $packageName, $db)
+	protected function createEntity ($tableName, $package, $db)
 	{
 		$reflector = new ESys_DB_Reflector($db);
 		$table = $reflector->fetchTables($tableName);
@@ -136,7 +142,7 @@ class ESys_Scaffolding_Entity_Generator {
 			    '(): requested table does not exist', E_USER_ERROR);
 			return false;
 		}
-		return new ESys_Scaffolding_Entity_Entity($table, $packageName);
+		return new ESys_Scaffolding_Entity_Entity($table, $package);
 	}
 
 
@@ -158,9 +164,9 @@ class ESys_Scaffolding_Entity_Generator {
     }
 
 
-    protected function getAdminPackagePath ($entity)
+    protected function getAdminPackagePath ($package, $entity)
     {
-		$adminPackageName = $entity->packageName().'_AdminApp_'.ucfirst($entity->instanceName());
+		$adminPackageName = $package->full().'_'.ucfirst($entity->instanceName());
 		return str_replace('_', '/', $adminPackageName);
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 $entity = $this->getRequired('entity');
+$package = $this->getRequired('package');
 
 
 ?>
@@ -9,7 +10,7 @@ $entity = $this->getRequired('entity');
 require_once 'ESys/Form.php';
 require_once 'ESys/ArrayAccessor.php';
 
-class <?php echo $entity->adminPackageName(); ?>_Form extends ESys_Form {
+class <?php echo $package->full().'_'.ucfirst($entity->instanceName()); ?>_Form extends ESys_Form {
 
 
     public function captureInput ($rawInput)

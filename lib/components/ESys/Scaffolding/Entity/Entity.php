@@ -31,12 +31,6 @@ class ESys_Scaffolding_Entity_Entity {
 	    return $this->packageName;
 	}
 
-    public function adminPackageName ()
-    {
-        return $this->packageName().'_AdminApp_'.ucfirst($this->instanceName());
-    }
-
-
 	public function className ()
 	{
 		return $this->packageName.'_'.ucfirst($this->instanceName());

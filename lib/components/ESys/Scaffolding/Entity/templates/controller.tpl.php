@@ -1,15 +1,21 @@
 <?php
 
 $entity = $this->getRequired('entity');
+$package = $this->getRequired('package');
+
+
+$adminPackageName = $package->full().'_'.ucfirst($entity->instanceName());
+
+
 
 ?>
 <php>
 
 require_once 'ESys/WebControl/Controller.php';
-require_once '<?php echo str_replace('_', '/', $entity->adminPackageName().'_Form').'.php'; ?>';
+require_once '<?php echo str_replace('_', '/', $adminPackageName.'_Form').'.php'; ?>';
 require_once '<?php echo $entity->fileName(); ?>';
 
-class <?php echo $entity->adminPackageName(); ?>_Controller extends ESys_WebControl_Controller {
+class <?php echo $adminPackageName; ?>_Controller extends ESys_WebControl_Controller {
 
 
     private $templateDir;
@@ -43,7 +49,7 @@ class <?php echo $entity->adminPackageName(); ?>_Controller extends ESys_WebCont
 
     protected function doNew ($request)
     {
-        $form = new <?php echo $entity->adminPackageName(); ?>_Form();
+        $form = new <?php echo $adminPackageName; ?>_Form();
         return $this->getResponseFactory()->build('ok', array(
             'content' => $form->render($request)
         ));
@@ -63,7 +69,7 @@ class <?php echo $entity->adminPackageName(); ?>_Controller extends ESys_WebCont
                 'content' => "<?php echo ucfirst($entity->displayName()); ?> {$id} not found"
             ));
         }
-        $form = new <?php echo $entity->adminPackageName(); ?>_Form();
+        $form = new <?php echo $adminPackageName; ?>_Form();
         $form->captureInput($<?php echo $entity->instanceName(); ?>->getAll());
         return $this->getResponseFactory()->build('ok', array(
             'content' => $form->render($request)
@@ -84,7 +90,7 @@ class <?php echo $entity->adminPackageName(); ?>_Controller extends ESys_WebCont
                 'content' => "<?php echo ucfirst($entity->displayName()); ?> record {$id} not found"
             ));
         }
-        $form = new <?php echo $entity->adminPackageName(); ?>_Form();
+        $form = new <?php echo $adminPackageName; ?>_Form();
         $form->captureInput($postData);
         if (! $form->validate()) {
             return $this->getResponseFactory()->build('ok', array(
