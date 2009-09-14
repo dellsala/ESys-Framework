@@ -8,7 +8,7 @@ $form = $this->getRequired('form');
 $formBuilder = new ESys_Html_FormBuilder($form->getData());
 
 if ($form->hasLoginError()) {
-    $messageView = new ESys_Template('SSRent/AdminApp/templates/message.tpl.php');
+    $messageView = new ESys_Template('ESys/Admin/templates/message.tpl.php');
     $messageView->set('message', new ESys_Message_Warning(
         '<b>Login Error</b><br>'.
         'Unrecognized username/password combination'
