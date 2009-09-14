@@ -1,5 +1,8 @@
 <?php
 
+require_once 'ESys/Authenticator.php';
+
+
 class ESys_Admin_CredentialsChecker implements ESys_Authenticator_CredentialsChecker {
 
 

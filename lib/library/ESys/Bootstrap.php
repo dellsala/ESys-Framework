@@ -162,6 +162,23 @@ class ESys_Bootstrap {
 
 
 
+    /**
+     * @param ESys_Admin_CredentialsChecker
+     * @return void
+     */
+    public static function initAuthenticator (ESys_Admin_CredentialsChecker $credentialsChecker)
+    {
+        require_once 'ESys/Authenticator.php';
+        $authenticator = new ESys_Authenticator(
+            $credentialsChecker,
+            ESys_Application::get('session')
+        );
+        ESys_Application::set('authenticator', $authenticator);
+    }
+
+
+
+
 }
 
 
