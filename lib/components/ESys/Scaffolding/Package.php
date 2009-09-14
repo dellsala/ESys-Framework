@@ -39,4 +39,13 @@ class ESys_Scaffolding_Package {
     }
     
 
+    /**
+     * @return string
+     */
+    public function full ()
+    {
+        return $this->base()."_".$this->sub();
+    }
+
+
 }

@@ -122,7 +122,8 @@ class ESys_Admin_ResponseFactory extends ESys_WebControl_ResponseFactory {
      */
     protected function createLayout ($title, $content, $selectedMenu = null)
     {
-        $pageView = new ESys_Template($this->packageName.'/AdminApp/templates/main.tpl.php');
+        $packagePath = str_replace('_', '/', $this->packageName);
+        $pageView = new ESys_Template($packagePath.'/templates/main.tpl.php');
         $pageView->set('content', $content);
         $pageView->set('title', $title);
         $pageView->set('selectedMenu', $selectedMenu);

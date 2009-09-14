@@ -1,6 +1,6 @@
 <?php
 
-$packageName = $this->getRequired('packageName');
+$package = $this->getRequired('package');
 
 
 ?>
@@ -30,7 +30,7 @@ if ($auth->isLoggedIn()) {
     );
 }
 
-$applicationTitle = '<?php echo $packageName; ?> Admin';
+$applicationTitle = '<?php echo $package->base(); ?> <?php echo $package->sub(); ?>';
 
 $pageView = new ESys_Template('ESys/Admin/templates/layout.tpl.php');
 $pageView->set('documentTitle', $title.' | '.$applicationTitle);
