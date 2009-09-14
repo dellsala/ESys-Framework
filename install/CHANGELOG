@@ -1,4 +1,74 @@
 +----------------+
+| version 1.1.0  |
+| 2009-09-14     |
++----------------+
+
+*** SIGNIFICANT NEW VERSION ***
+
+This version offers some significant new features. There are some
+major changes to the admin stylesheets and templates that break backwards
+compatibility. The ESys_Admin package now offers a few new components that
+offer reasonable and flexible default behaviors when building new applications,
+along with some new helper init methods from the ESys_Bootstrap class. This 
+version also offers improvements and new features in the code generation tools.
+
+-- NEW FEATURES --
+
+* ESys_Core styles:
+    - added new reset stylesheet
+    - moved all images in Core styles to Admin styles
+
+* ESys_Admin styles: 
+    - brand new stylesheet for admin (standard forms, layout elements, buttons)
+    - updated main layout template to work with new admin styles
+    - updated message template to work with new styles
+
+* ESys_Admin_CredentialsChecker: 
+    - a simple credentials checker that can be configured 
+      with a single username and password
+
+* ESys_Admin_Bootstrap:
+    - a default boostrapper for basic applications
+    - runs default framework bootstrap
+    - runs database bootstrap
+    - runs session bootstrap using package name argument
+    - runs authenticator bootstrap using an ESys_Admin_CredentialsChecker
+
+* ESys_Admin_ResponseFactory:
+    - a default response factory for basic applications
+    - supports response data with title, content and selectedMenu elements
+    - package name constructor argument determines path to main template
+
+* ESys_Admin_Login:
+    - basic login component for admin applications
+
+* ESys_Logger_ErrorReporterListener: 
+    - added support for writting full error backtraces to files when logging errors
+
+* ESys_Bootstrap:
+    - uses a new ESys_Config "logErrorBacktraces" setting to 
+      configure the ESys_Logger_ErrorReporterListener
+    - initSession(): new helper method for initializing application session 
+      with sane defaults. session data is saved in lib/data/session
+    - initAutenticator(): new method creates default authenticator with 
+      credentials checker argument
+
+* ESys_Scaffolding:
+    - new package for code generation components
+    - lib/bin/generate.php now supports "application" and "entity" generation
+    - ESys_Scafolding_ApplicationGenerator: builds minimal files required for 
+      a working admin application
+    - ESys_Scaffolding_Entity_Generator: renamed from ESys_CrudGenerator
+    - entity generation updated to use markup for new ESys_Admin styles
+    - supports prompting to overwrite existing files
+    - supports fully customizable application package name
+
+* ESys_Data_Store_Static:
+    - new data store for hard-coded record data
+
+
+
++----------------+
 | version 1.0.1  |
 | 2009-08-06     |
 +----------------+
