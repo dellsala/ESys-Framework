@@ -9,23 +9,22 @@ $head = $this->getOptional('head');
 $content = $this->getRequired('content');
 $selectedMenu = $this->getOptional('selectedMenu');
 $title = $this->getRequired('title');
+$request = $this->getRequired('request');
 
 $auth = ESys_Application::get('authenticator');
-
-$urlBase = ESys_Application::get('config')->get('urlBase');
 
 if ($auth->isLoggedIn()) {
     $menu = array(
         'login' => array(
             'label' => 'Logout',
-            'url' => $urlBase.'/gateway/logout',
+            'url' => $request->url('frontController').'/gateway/logout',
         ),
     );
 } else {
     $menu = array(
         'login' => array(
             'label' => 'Login',
-            'url' => $urlBase.'/gateway/',
+            'url' => $request->url('frontController').'/gateway/',
         ),
     );
 }
