@@ -163,10 +163,10 @@ class ESys_Bootstrap {
 
 
     /**
-     * @param ESys_Admin_CredentialsChecker
+     * @param ESys_Authenticator_CredentialsChecker
      * @return void
      */
-    public static function initAuthenticator (ESys_Admin_CredentialsChecker $credentialsChecker)
+    public static function initAuthenticator (ESys_Authenticator_CredentialsChecker $credentialsChecker)
     {
         require_once 'ESys/Authenticator.php';
         $authenticator = new ESys_Authenticator(
