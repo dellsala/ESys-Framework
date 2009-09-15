@@ -9,9 +9,6 @@ class ESys_Authenticator {
     private $credentialsChecker;
     
 
-    private $denyAccessBehavior;
-    
-
     private $session;
     
     
@@ -27,17 +24,6 @@ class ESys_Authenticator {
     }
 
     
-    /**
-     * @param ESys_Authenticator_DenyAccessBehavior $behavior
-     * @return void
-     */
-    public function setDenyAccessBehavior (
-        ESys_Authenticator_DenyAccessBehavior $behavior)
-    {
-        $this->denyAccessBehavior = $behavior;
-    }
-
-
     /**
      * Begins a logged-in session if the supplied credentials are
      * accepted by the system.
@@ -87,41 +73,6 @@ class ESys_Authenticator {
         return $this->credentialsChecker->checkAuthorization(
             $this->getLoginId(), $authorizationId);
     }
-
-
-    /**
-     * Checks authorization and denys access if authorization fails.
-     *
-     * @param string $authorizationId 
-     * @return void
-     */
-    public function filterAccess ($authorizationId = null)
-    {
-        if (! $this->isAuthorized($authorizationId)) {
-            $this->denyAccess();
-            exit();
-        }
-        return;
-    }
-
-
-
-    /**
-     * Denys access to the user.
-     *
-     * Exact behavior is determined by the denyAccessBehavior
-     * assigned to the authenticator.
-     *
-     * @return void
-     */
-    public function denyAccess ()
-    {
-        $denyAccessBehavior = isset($this->denyAccessBehavior)
-            ? $this->denyAccessBehavior
-            : new ESys_Authenticator_DenyAccessBehavior_Default();
-        $denyAccessBehavior->denyAccess($this->isLoggedIn());
-    }
-
 
 
     /**
@@ -179,39 +130,5 @@ interface ESys_Authenticator_CredentialsChecker {
      * @return boolean
      */
     public function checkAuthorization ($loginId, $authorizationId);
-
-}
-
-
-/**
- * @package ESys
- */
-interface ESys_Authenticator_DenyAccessBehavior {
-
-    /**
-     * @param boolean $isLoggedIn
-     */
-    public function denyAccess ($isLoggedIn);
-
-}
-
-
-/**
- * @package ESys
- */
-class ESys_Authenticator_DenyAccessBehavior_Default 
-    implements ESys_Authenticator_DenyAccessBehavior
-{
-
-    /**
-     * @param boolean $isLoggedIn
-     * @return void
-     */
-    public function denyAccess ($isLoggedIn)
-    {
-        header('HTTP/1.x 403 Forbidden');
-        echo $isLoggedIn ? 'Not authorized.' : 'Not logged in.';
-        exit();
-    }
 
 }
