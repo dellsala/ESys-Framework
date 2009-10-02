@@ -1,4 +1,28 @@
 +----------------+
+| version 1.1.1  |
+| 2009-10-02     |
++----------------+
+
+-- BUG FIXES --
+
+* bin:
+    removed old, broken scripts
+
+* ESys_Bootstrap: 
+	- initAuthenticator() argument was wrong type of credentials checker
+
+* ESys_Scaffolding_Application: 
+    - main template nav was using urlBase when it should have been 
+      using frontController url from request object
+
+* ESys_Authenticator: 
+    - removed all denyAccess behaviors and interfaces 
+    - authenticator is no longer responsible for denying access, 
+      only testing for authorization
+
+
+
++----------------+
 | version 1.1.0  |
 | 2009-09-14     |
 +----------------+
