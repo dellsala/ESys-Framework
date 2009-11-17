@@ -112,8 +112,9 @@ class ESys_WebControl_FrontController
             'frontControllerPath' => $this->scriptPath,
             'controllerPath' => $controllerPath,
             'actionParameters' => $actionParams,
-            'getData' => $_GET,
-            'postData' => $_POST,
+            'getData' => $getData,
+            'postData' => $postData,
+            'serverData' => $serverData,
         ));
         if (! $controllerClassName) {
             return $this->handleNotFound($request);
