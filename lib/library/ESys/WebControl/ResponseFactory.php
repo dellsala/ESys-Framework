@@ -36,7 +36,7 @@ class ESys_WebControl_ResponseFactory {
      * @param array
      * @return ESys_WebControl_Response
      */
-    public function build ($type, $data)
+    public function build ($type, $data = array())
     {
         $buildMethodName = 'build'.ucfirst($type);
         if (! method_exists($this, $buildMethodName)) {
