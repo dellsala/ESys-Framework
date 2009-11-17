@@ -1,4 +1,46 @@
 +----------------+
+| version 1.1.2  |
+| 2009-11-17     |
++----------------+
+
+-- NEW FEATURES --
+
+* ESys_Admin_DbBackup: 
+    - ported over db backup compoment from earlier framework. 
+    - this version doesnt store files on the server. just downloads them directly
+    - to configure with different options extend it and override the constructor
+
+* ESys_DB_Connection: 
+    - updated to report elapsed time for query and connection events
+
+* ESys_Logger_DBListener:
+    - updated to log query and connection elapsed time
+
+* ESys_Calender: 
+    - new family of objects for renpresenting calendars
+    - includes unit tests
+
+-- BUG FIXES --
+
+* ESys_WebControl_FrontController: 
+    - now correctly builds Request object with the actual get, 
+      post and server arrays passed as arguments to handleRequest()
+    - fixed unit test to reflect getData being passed correctly to request
+
+* ESys_WebControl_ResponseFactory: 
+    - the data argument for the build() method is now optional
+    - useful when you quickly want to return a notFound or error with the default message
+
+* ESys_Scaffolding: 
+    - removed validator include from model generation template
+
+* ESys_Pager: 
+    - setSelectedPage() now normalizes value for a valid page
+    - getPageCount() returns 0 when items per page has not been set yet
+
+
+
++----------------+
 | version 1.1.1  |
 | 2009-10-02     |
 +----------------+
