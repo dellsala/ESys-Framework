@@ -47,6 +47,9 @@ class ESys_Pager {
      */
     public function setSelectedPage ($selectedPage)
     {
+        if ($selectedPage > $this->getPageCount()) {
+            $selectedPage = $this->getPageCount();
+        }
         $this->selectedPage = $selectedPage;
     }
 
@@ -68,6 +71,9 @@ class ESys_Pager {
      */
     public function getPageCount ()
     {
+        if (! $this->itemsPerPage) {
+            return 0;
+        }
         return ceil($this->itemCount / $this->itemsPerPage);
     }
 
