@@ -101,7 +101,7 @@ class ESys_WebControl_FrontControllerTest extends PHPUnit_Framework_TestCase {
                 'frontControllerPath' => $this->frontControllerPath,
                 'controllerPath' => '/path/to/controller',
                 'actionParameters' => array('action', 'param'),
-                'getData' => array(),
+                'getData' => $this->httpGetData,
                 'postData' => array(),
             )),
             $response->request
