@@ -48,7 +48,9 @@ class ESys_DB_Connection {
         if ($this->link) {
             return true;
         }
+        $startTime = microtime(true);
         $this->link = @mysql_connect($this->dbhost, $this->dbuser, $this->dbpass);
+        $elapsedTime = round(microtime(true) - $startTime, 4);
         if (! $this->link) {
             $this->notifyListeners(self::EVENT_ERROR, array(
                 'code' => mysql_errno(),
@@ -67,6 +69,7 @@ class ESys_DB_Connection {
         }
         $this->notifyListeners(self::EVENT_CONNECTION, array(
             'message' => "{$this->dbuser}@{$this->dbhost}:{$this->dbase} connected",
+            'time' => $elapsedTime,
         ));
         $this->query("SET NAMES 'utf8'");
         return true;
@@ -160,9 +163,12 @@ class ESys_DB_Connection {
             trigger_error(__CLASS__.'::'.__FUNCTION__.'(): query failed, not connected.', E_USER_WARNING);
             return false;
         }
+        $startTime = microtime(true);
         $sqlResult = @mysql_query($this->sqlQuery, $this->link);
+        $elapsedTime = round(microtime(true) - $startTime, 4);
         $this->notifyListeners(self::EVENT_QUERY, array(
             'query' => $query,
+            'time' => $elapsedTime,
         ));
         if ($sqlResult === false) {
             $this->notifyListeners(self::EVENT_ERROR, array(

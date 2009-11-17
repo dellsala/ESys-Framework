@@ -20,7 +20,7 @@ class ESys_Logger_DBListener extends ESys_Logger
         {
             case (ESys_DB_Connection::EVENT_CONNECTION): 
                 $type = 'CONNECTION';
-                $message = $notification['message'];
+                $message = "({$notification['time']}) {$notification['message']}";
                 break;
             case (ESys_DB_Connection::EVENT_ERROR): 
                 $type = 'ERROR';
@@ -28,7 +28,7 @@ class ESys_Logger_DBListener extends ESys_Logger
                 break;
             case (ESys_DB_Connection::EVENT_QUERY): 
                 $type = 'QUERY';
-                $message = $notification['query'];
+                $message = "({$notification['time']}) {$notification['query']}";
                 break;
             case (ESys_DB_Connection::EVENT_CLOSE): 
                 $type = 'CLOSE';
