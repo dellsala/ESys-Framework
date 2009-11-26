@@ -35,16 +35,25 @@ class ESys_Html_FormBuilder
     }
 
     
-
     protected function getDataValue ($name, $default = '')
     {
-        $nameParts = explode('[', $name);
-        if (count($nameParts) == 2 && substr($name, -1) == ']') {
-            $nameSet = $nameParts[0];
-            $nameKey = substr($nameParts[1], 0, -1);
-            if (isset($this->data[$nameSet][$nameKey])) {
-                return $this->data[$nameSet][$nameKey];
+        $matches = array();
+        if (preg_match('/^(\w+)(\[(\w*)\])$/', $name, $matches)) {
+            $fieldName = $matches[1];
+            if (empty($matches[3])) {
+                $dataValue = isset($this->data[$fieldName])
+                    ? $this->data[$fieldName]
+                    : array();
+                if (! is_array($dataValue)) {
+                    $dataValue = array();
+                }
+            } else {
+                $subFieldName = $matches[3];
+                $dataValue = isset($this->data[$fieldName][$subFieldName])
+                    ? $this->data[$fieldName][$subFieldName]
+                    : $default;
             }
+            return $dataValue;
         }
         return isset($this->data[$name]) ? $this->data[$name] : $default;
     }
@@ -192,8 +201,15 @@ class ESys_Html_FormBuilder
         if (! is_array($attributes)) {
             $attributes = array();
         }
-        if ($this->getDataValue($name, null) == $value) {
-            $attributes['checked'] = true;
+        $dataValue = $this->getDataValue($name, null);
+        if (is_array($dataValue)) {
+            if (in_array($value, $dataValue)) {
+                $attributes['checked'] = true;
+            }
+        } else {
+            if ($dataValue == $value) {
+                $attributes['checked'] = true;
+            }
         }
         $value = htmlentities($value, ENT_COMPAT, 'UTF-8');
         $this->_applyErrorFlag($name, $attributes);

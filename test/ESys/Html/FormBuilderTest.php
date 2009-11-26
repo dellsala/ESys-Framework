@@ -10,7 +10,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider nameAndValueData
      */
-    public function testTextInputSimple ($name, $value)
+    public function testCreatesTextInput ($name, $value)
     {
         $form = $this->createFormBuilder(array());
         $expectedDom = $this->createBasicInputDom('text', $name, '');
@@ -22,7 +22,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider nameAndValueData
      */
-    public function testTextInputDataPrepopulated ($name, $value)
+    public function testCreatesPrepopulatedTextInput ($name, $value)
     {
         $form = $this->createFormBuilder(array($name=>$value));
         $expectedDom = $this->createBasicInputDom('text', $name, $value);
@@ -31,7 +31,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testTextInputFlaggedAsError ()
+    public function testAddsErrorClass ()
     {
         $name = 'email';
         $value = 'john@smith.com';
@@ -44,7 +44,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testTextInputFlaggedAsErrorWithExistingClass ()
+    public function testAddsErrorClassToExistingClassAttribute ()
     {
         $name = 'email';
         $value = 'john@smith.com';
@@ -58,7 +58,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testTextInputFlaggedAsErrorWithCustomClassName ()
+    public function testAddsCustomErrorClass ()
     {
         $name = 'email';
         $value = 'john@smith.com';
@@ -72,7 +72,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testTextInputWithArrayData ()
+    public function testCreatesPrepopulatedTextInputWithHashInputData ()
     {
         $inputData = array(
             'name' => array(
@@ -94,7 +94,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider nameAndValueData
      */
-    public function testCheckboxSimple ($name, $value)
+    public function testCreatesCheckbox ($name, $value)
     {
         $form = $this->createFormBuilder(array());
         $expectedDom = $this->createBasicInputDom('checkbox', $name, $value);
@@ -106,7 +106,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider nameAndValueData
      */
-    public function testCheckboxIsChecked ($name, $value)
+    public function testCreatesCheckedCheckbox ($name, $value)
     {
         $form = $this->createFormBuilder(array($name => $value));
         $expectedDom = $this->createBasicInputDom(
@@ -116,7 +116,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testCheckboxWithArryData ()
+    public function testCreatesCheckboxWithHashInputData ()
     {
         $name = "group_ids";
         $value = array(
@@ -132,7 +132,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testCheckboxIsCheckedWithArryData ()
+    public function testCreatesCheckedCheckboxWithHashInputData ()
     {
         $name = "group_ids";
         $value = array(
@@ -150,10 +150,37 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
+    public function testCreatesCheckedCheckboxWithArrayInputData ()
+    {
+        $fieldName = "options[]";
+        $selectedValues = array(
+            'option a',
+            'option b',
+            'option c',
+        );
+        $inputData = array(
+            'options' => $selectedValues
+        );
+        $form = $this->createFormBuilder($inputData);
+        $expectedDom = $this->createBasicInputDom(
+            'checkbox', $fieldName, $selectedValues[0], array('checked'=>'checked'));
+        $actualDom = $this->createDomFromHtmlString(
+            $form->checkbox($fieldName, $selectedValues[0]));
+        $this->assertEquals($expectedDom, $actualDom,
+            'checkbox with a value in the input values should be checked');
+        $expectedDom = $this->createBasicInputDom(
+            'checkbox', $fieldName, 'unselected option');
+        $actualDom = $this->createDomFromHtmlString(
+            $form->checkbox($fieldName, 'unselected option'));
+        $this->assertEquals($expectedDom, $actualDom,
+            'checkbox with a value not in the input values should not be checked');
+    }
+
+
     /**
      * @dataProvider nameAndValueData
      */
-    public function testRadioSimpleAndIsChecked ($name, $value)
+    public function testCreatesCheckedRadio ($name, $value)
     {
         $form = $this->createFormBuilder(array($name => $value));
         $expectedDom = $this->createBasicInputDom(
@@ -163,7 +190,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testSelectSimple ()
+    public function testCreatesSelect ()
     {
         $name = 'country';
         $value = 'CA';
@@ -179,7 +206,7 @@ class ESys_Html_FormBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testSelectMultiple ()
+    public function testCreatesMultipleSelect ()
     {
         $name = 'country';
         $value = array('CA', 'AU');
