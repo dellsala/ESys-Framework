@@ -32,6 +32,15 @@ class ESys_Feed_GoogleGeocoder {
 
 
     /**
+     * @return string
+     */
+    public function getApiKey ()
+    {
+        return $this->apiKey;
+    }
+
+
+    /**
      * @param string $addressString
      * @return void
      */
