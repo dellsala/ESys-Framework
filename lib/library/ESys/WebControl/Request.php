@@ -30,19 +30,19 @@
 class ESys_WebControl_Request {
 
 
-    private $urlParts = array(
+    protected $urlParts = array(
         'base' => '',
         'frontController' => '',
         'controller' => '',
     );
 
-    private $actionParameters = array();
+    protected $actionParameters = array();
 
-    private $getData = array();
+    protected $getData = array();
 
-    private $postData = array();
+    protected $postData = array();
 
-    private $serverData = array();
+    protected $serverData = array();
     
 
     /**
