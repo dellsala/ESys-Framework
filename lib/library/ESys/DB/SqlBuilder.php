@@ -93,7 +93,7 @@ class ESys_DB_SqlBuilder {
         } else if (! isset($value)) {
             $type = 'NULL';
         } else if (is_int($value)
-            || ctype_digit((string) $value))
+            || (ctype_digit((string) $value) && substr($value, 0, 1) !== '0'))
         {
             $type = 'NUMERIC';
         } else  {
