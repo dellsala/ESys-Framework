@@ -1,4 +1,31 @@
 +----------------+
+| version 1.1.4  |
+| 2010-02-19     |
++----------------+
+
+-- NEW FEATURES --
+
+* ESys_Feed_GoogleGeocoder: 
+    - added method for retriving the google api key
+
+* ESys_Data_Store_Sql: 
+    - added queryAndFetchRecord helper method for running queries 
+      that return a single record or null
+
+-- BUG FIXES --
+
+* ESys_DB_SqlBuilder: 
+    - fixed bug when converting digit strings starting with 0. 
+      now converts them to sql strings instead of ints
+
+* ESys_WebControl_Request: 
+    - properties made protected instead of private so it can be extended
+
+* fckeditor removed
+
+
+
++----------------+
 | version 1.1.3  |
 | 2009-11-26     |
 +----------------+
