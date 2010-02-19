@@ -62,6 +62,20 @@ abstract class ESys_Data_Store_Sql implements ESys_Data_Store {
 
 
     /**
+     * @param string
+     * @return object
+     */
+    protected function queryAndFetchRecord ($query)
+    {
+		$recordList = $this->queryAndFetchRecords($query);
+		if (! count($recordList)) {
+		    return null;
+		}
+		return $recordList[0];
+    }
+
+
+    /**
      * @param string $id
      * @return ESys_Data_Record|null
      */
