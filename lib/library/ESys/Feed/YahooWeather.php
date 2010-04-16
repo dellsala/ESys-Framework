@@ -1,7 +1,5 @@
 <?php
 
-require_once 'XML/Unserializer.php';
-
 /**
  * Yahoo Weather API for php.
  *
@@ -12,6 +10,7 @@ class ESys_Feed_YahooWeather
 
 
     private $data = null;
+    private $xml = null;
     private $cacheDirectory = null;
     private $usingCachedData = false;
 
@@ -64,13 +63,8 @@ class ESys_Feed_YahooWeather
                 'remote file access not supported on this server', E_USER_WARNING);
             return false;
         }
-        $unserializer = new XML_Unserializer(array(
-            XML_UNSERIALIZER_OPTION_ATTRIBUTES_PARSE => true,
-            XML_UNSERIALIZER_OPTION_ATTRIBUTES_ARRAYKEY => '_attr',
-        ));
-        $result = $unserializer->unserialize($xml, false);
-        if (! $result) { return false; }
-        $this->data = $unserializer->getUnserializedData();
+        $this->xml = $xml;
+        $this->data = simplexml_load_string($xml);
         return true;
     }
 
@@ -78,7 +72,7 @@ class ESys_Feed_YahooWeather
     private function _getCachedData ($zipcode, $unit)
     {
         $dataMd5 = md5($zipcode.$unit);
-        $cacheFile = $this->cacheDirectory.'/'.$dataMd5;
+        $cacheFile = $this->cacheDirectory.'/'.$dataMd5.'.xml';
         $refreshCache = false;
         if (! file_exists($cacheFile)) {
             $refreshCache = true;
@@ -94,13 +88,14 @@ class ESys_Feed_YahooWeather
             $result = $this->_getRemoteData($zipcode, $unit);
             if ($result) {
                 $fh = fopen($cacheFile, 'w');
-                fputs($fh, serialize($this->data));
+                fputs($fh, $this->xml);
                 fclose($fh);
             }
             $this->usingCachedData = false;
             return $result;
         }
-        $this->data = unserialize(implode('', file($cacheFile)));
+        $this->xml = file_get_contents($cacheFile);
+        $this->data = simplexml_load_string($this->xml);
         $this->usingCachedData = true;
         return true;
     }
@@ -122,8 +117,9 @@ class ESys_Feed_YahooWeather
     public function getTemperature ($noUnit = false)
     {
         if (! $this->data) { return false; }
-        $unit = $noUnit ? '' : '°'.$this->data['channel']['yweather:units']['_attr']['temperature'];
-        return $this->data['channel']['item']['yweather:condition']['_attr']['temp'] . $unit;
+        $result = $this->data->xpath('channel/item/yweather:condition');
+        $unit = $noUnit ? '' : '°';
+        return (string)$result[0]['temp'] . $unit;
     }
 
 
@@ -133,7 +129,8 @@ class ESys_Feed_YahooWeather
     public function getText ()
     {
         if (! $this->data) { return false; }
-        return $this->data['channel']['item']['yweather:condition']['_attr']['text'];
+        $result = $this->data->xpath('channel/item/yweather:condition');
+        return (string)$result[0]['text'];
     }
 
 
@@ -143,7 +140,8 @@ class ESys_Feed_YahooWeather
     public function getDate ()
     {
         if (! $this->data) { return false; }
-        return $this->data['channel']['item']['yweather:condition']['_attr']['date'];
+        $result = $this->data->xpath('channel/item/yweather:condition');
+        return (string)$result[0]['date'];
     }
 
 
@@ -153,7 +151,8 @@ class ESys_Feed_YahooWeather
     public function getHtmlDescription ()
     {
         if (! $this->data) { return false; }
-        return $this->data['channel']['item']['description'];
+        $result = $this->data->xpath('channel/item/description');
+        return (string)$result[0];
     }
 
 
@@ -163,7 +162,8 @@ class ESys_Feed_YahooWeather
     public function getYahooLink ()
     {
         if (! $this->data) { return false; }
-        return $this->data['channel']['item']['link'];
+        $result = $this->data->xpath('channel/item/link');
+        return (string)$result[0];
     }
 
 
