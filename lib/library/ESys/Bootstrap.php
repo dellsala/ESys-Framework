@@ -177,6 +177,19 @@ class ESys_Bootstrap {
     }
 
 
+    /**
+     * @param array
+     * @return void
+     */
+    public static function initAutoLoader ($includePathList = null)
+    {
+        require_once 'ESys/AutoLoader.php';
+        $autoLoader = new ESys_AutoLoader($includePathList);
+        $autoLoader->register();
+        ESys_Application::set('autoLoader', $autoLoader);
+    }
+
+
 
 
 }
