@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SCRIPTPATH=`which $0`
+TESTDIRECTORY=`dirname $SCRIPTPATH`;
+
+cd $TESTDIRECTORY;
+
+TESTDIRECTORY=`pwd`
+
+phpunit --colors --bootstrap $TESTDIRECTORY/_bootstrap.php \
+    --coverage-html $TESTDIRECTORY/coverage-report \
+    $TESTDIRECTORY/MasterTestSuite.php
+

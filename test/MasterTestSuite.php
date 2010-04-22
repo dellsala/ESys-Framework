@@ -3,6 +3,8 @@
 require_once 'PHPUnit/Framework.php';
 require_once 'ESys/PHPUnit/TestSuiteBuilder.php';
 
+PHPUnit_Util_Filter::removeDirectoryFromFilter(dirname(__FILE__));
+
 class MasterTestSuite extends PHPUnit_Framework_TestSuite {
 
 
