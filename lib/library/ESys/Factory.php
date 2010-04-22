@@ -19,7 +19,7 @@ class ESys_Factory {
         if (! isset($this->instanceList[$id])) {
             if (! $className = $this->mapIdToClassName($id)) {
                 trigger_error(__CLASS__.'::'.__FUNCTION__.
-                    "(): unrecognized instance id {$id}", E_USER_WARNING);
+                    "(): invalid instance id {$id}", E_USER_WARNING);
                 return null;
             }
             $this->instanceList[$id] = $this->createInstance($className);
