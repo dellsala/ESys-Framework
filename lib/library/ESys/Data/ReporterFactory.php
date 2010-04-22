@@ -6,18 +6,18 @@ require_once 'ESys/Factory.php';
 /**
  * @package ESys
  */
-class ESys_Data_Store_Factory extends ESys_Factory {
+class ESys_Data_ReporterFactory extends ESys_Factory {
 
 
-    protected $modelPackageName;
+    protected $reportPackageName;
 
 
     /**
      * @param string
      */
-    public function __construct ($modelPackageName)
+    public function __construct ($reportPackageName)
     {
-        $this->modelPackageName = $modelPackageName;
+        $this->reportPackageName = $reportPackageName;
     }
 
 
@@ -28,7 +28,7 @@ class ESys_Data_Store_Factory extends ESys_Factory {
     protected function mapIdToClassName ($id)
     {
         $entityName = str_replace(' ', '', ucwords(str_replace('_', ' ', $id)));
-        return $this->modelPackageName.'_'.$entityName.'_DataStore';
+        return $this->reportPackageName.'_'.$entityName.'_Reporter';
     }
 
 
