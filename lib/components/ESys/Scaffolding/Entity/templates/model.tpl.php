@@ -14,9 +14,6 @@ foreach ($entity->attributeList() as $attribute) {
 ?>
 <php>
 
-require_once 'ESys/Data/Store/Sql.php';
-require_once 'ESys/Data/Record.php';
-
 
 class <?php echo $entity->className(); ?> extends ESys_Data_Record {
 

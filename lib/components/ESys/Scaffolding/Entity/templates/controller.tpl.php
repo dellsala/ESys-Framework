@@ -11,9 +11,6 @@ $adminPackageName = $package->full().'_'.ucfirst($entity->instanceName());
 ?>
 <php>
 
-require_once 'ESys/WebControl/Controller.php';
-require_once '<?php echo str_replace('_', '/', $adminPackageName.'_Form').'.php'; ?>';
-require_once '<?php echo $entity->fileName(); ?>';
 
 class <?php echo $adminPackageName; ?>_Controller extends ESys_WebControl_Controller {
 
@@ -23,6 +20,8 @@ class <?php echo $adminPackageName; ?>_Controller extends ESys_WebControl_Contro
     
     public function __construct ()
     {
+        $dataStoreFactory = ESys_Application::get('dataStoreFactory');
+        $this-><?php echo $entity->instanceName(); ?>Store = $dataStoreFactory->getInstance('<?php echo $entity->tableName() ?>');
         $this->templateDir = dirname(__FILE__).'/templates';
     }
     
@@ -36,8 +35,7 @@ class <?php echo $adminPackageName; ?>_Controller extends ESys_WebControl_Contro
 
     protected function doIndex ($request)
     {
-        $<?php echo $entity->instanceName(); ?>Store = new <?php echo $entity->className(); ?>_DataStore();
-        $<?php echo $entity->instanceName(); ?>List = $<?php echo $entity->instanceName(); ?>Store->fetchAll();
+        $<?php echo $entity->instanceName(); ?>List = $this-><?php echo $entity->instanceName(); ?>Store->fetchAll();
         $listView = new ESys_Template($this->templateDir.'/list.tpl.php');
         $listView->set('request', $request);
         $listView->set('<?php echo $entity->instanceName(); ?>List', $<?php echo $entity->instanceName(); ?>List);
@@ -63,8 +61,7 @@ class <?php echo $adminPackageName; ?>_Controller extends ESys_WebControl_Contro
         if (! isset($id)) {
             return new ESys_WebControl_Response_Redirect($request->url('controller').'/new');
         }
-        $<?php echo $entity->instanceName(); ?>Store = new <?php echo $entity->className(); ?>_DataStore();
-        if (! $<?php echo $entity->instanceName(); ?> = $<?php echo $entity->instanceName(); ?>Store->fetch($id)) {
+        if (! $<?php echo $entity->instanceName(); ?> = $this-><?php echo $entity->instanceName(); ?>Store->fetch($id)) {
             return $this->getResponseFactory()->build('notFound', array(
                 'content' => "<?php echo ucfirst($entity->displayName()); ?> {$id} not found"
             ));
@@ -81,9 +78,8 @@ class <?php echo $adminPackageName; ?>_Controller extends ESys_WebControl_Contro
     {
         $postData = $request->postData();
         $id = isset($postData['id']) ? $postData['id'] : null;
-        $<?php echo $entity->instanceName(); ?>Store = new <?php echo $entity->className(); ?>_DataStore();
-        $<?php echo $entity->instanceName(); ?> = empty($id) ? $<?php 
-            echo $entity->instanceName(); ?>Store->fetchNew() : $<?php 
+        $<?php echo $entity->instanceName(); ?> = empty($id) ? $this-><?php 
+            echo $entity->instanceName(); ?>Store->fetchNew() : $this-><?php 
             echo $entity->instanceName(); ?>Store->fetch($id);
         if (! $<?php echo $entity->instanceName(); ?>) {
             return $this->getResponseFactory()->build('notFound', array(
@@ -98,7 +94,7 @@ class <?php echo $adminPackageName; ?>_Controller extends ESys_WebControl_Contro
             ));
         }
         $<?php echo $entity->instanceName(); ?>->setAll($form->getData());
-        if (! $<?php echo $entity->instanceName(); ?>Store->save($<?php echo $entity->instanceName(); ?>)) {
+        if (! $this-><?php echo $entity->instanceName(); ?>Store->save($<?php echo $entity->instanceName(); ?>)) {
             return $this->getResponseFactory()->build('error', array());
         }
         return new ESys_WebControl_Response_Redirect($request->url('controller'));
@@ -109,13 +105,12 @@ class <?php echo $adminPackageName; ?>_Controller extends ESys_WebControl_Contro
     {
         $postData = $request->postData();
         $id = isset($postData['id']) ? $postData['id'] : null;
-        $<?php echo $entity->instanceName(); ?>Store = new <?php echo $entity->className(); ?>_DataStore();
-        if (! $<?php echo $entity->instanceName(); ?> = $<?php echo $entity->instanceName(); ?>Store->fetch($id)) {
+        if (! $<?php echo $entity->instanceName(); ?> = $this-><?php echo $entity->instanceName(); ?>Store->fetch($id)) {
             return $this->getResponseFactory()->build('notFound', array(
                 'content' => "<?php echo ucfirst($entity->displayName()); ?> record {$id} not found"
             ));
         }
-        if (! $<?php echo $entity->instanceName(); ?>Store->delete($<?php echo $entity->instanceName(); ?>)) {
+        if (! $this-><?php echo $entity->instanceName(); ?>Store->delete($<?php echo $entity->instanceName(); ?>)) {
             return $this->getResponseFactory()->build('error', array());
         }
         return new ESys_WebControl_Response_Redirect($request->url('controller'));

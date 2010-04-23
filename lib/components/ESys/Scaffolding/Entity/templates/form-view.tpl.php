@@ -15,8 +15,6 @@ foreach ($entity->attributeList() as $attribute) {
 ?>
 <php>
 
-require_once 'ESys/Html/FormBuilder.php';
-
 $request = $this->getRequired('request');
 $form = $this->getRequired('form');
 

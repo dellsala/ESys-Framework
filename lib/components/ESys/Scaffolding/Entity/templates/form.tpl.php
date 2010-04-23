@@ -7,8 +7,6 @@ $package = $this->getRequired('package');
 ?>
 <php>
 
-require_once 'ESys/Form.php';
-require_once 'ESys/ArrayAccessor.php';
 
 class <?php echo $package->full().'_'.ucfirst($entity->instanceName()); ?>_Form extends ESys_Form {
 
