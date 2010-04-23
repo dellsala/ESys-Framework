@@ -28,6 +28,10 @@ class ESys_Data_ReporterFactoryTest extends PHPUnit_Framework_TestCase {
                 $this->reportPackageName.'_User_Reporter',
             ),
             array(
+                'userAddress',
+                $this->reportPackageName.'_UserAddress_Reporter',
+            ),
+            array(
                 'user_address',
                 $this->reportPackageName.'_UserAddress_Reporter',
             ),

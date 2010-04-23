@@ -28,6 +28,10 @@ class ESys_Data_Store_FactoryTest extends PHPUnit_Framework_TestCase {
                 $this->modelPackageName.'_User_DataStore',
             ),
             array(
+                'userAddress',
+                $this->modelPackageName.'_UserAddress_DataStore',
+            ),
+            array(
                 'user_address',
                 $this->modelPackageName.'_UserAddress_DataStore',
             ),
