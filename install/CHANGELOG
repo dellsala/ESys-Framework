@@ -1,4 +1,61 @@
 +----------------+
+| version 1.2.0  |
+| 2010-04-23     |
++----------------+
+
+*** SIGNIFICANT NEW VERSION ***
+
+This update includes some significant new additions to the
+ESys_Data package, as well as updates to the ESys_Scaffolding 
+package to leverage these improvements.
+
+
+--- MAJOR NEW FEATURES ---
+
+* ESys_Autoloader: 
+    - new autoloader component
+    - uses pear style naming conventions
+    - supports loading classes from parent package class files
+    
+* ESys_Factory: 
+    - generic factory for creating any kind of object. 
+    - template methods available for extending
+
+* ESys_Data_ReportRecord: 
+    - class for dynamicly providing an object oriented api for getting 
+      values from an associative array.
+
+* ESys_Data_Store_Factory: 
+    - central point for creating and accessing data stores
+    - works based on DataStore class naming conventions
+
+* ESys_Data_ReporterFactory: 
+    - central point for creating and accessing reporters based on naming convention
+
+* ESys_Bootstrap
+    - initAutoLoader() new helper method for registering the autoloader
+    
+* ESys_Admin_Bootstrap: 
+    - sets up an autoloader
+    - registers a dataStoreFactory
+
+* ESys_Scaffolding: 
+    - domain entities are now generated inside a Domain sub-package
+    - updated generated code to depend on autoloader 
+    - updated to use a registered dataStoreFactory
+
+--- MINOR NEW FEATURES ---
+
+* ESys_Feed_YahooWeather: 
+    - uses SimpleXML instead of pear serilaztion.
+
+* testing: 
+    - bootstrap adds test folder to include_path
+    - added script for generating code coverage report
+
+
+
++----------------+
 | version 1.1.4  |
 | 2010-02-19     |
 +----------------+
