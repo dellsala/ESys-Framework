@@ -142,7 +142,7 @@ class ESys_Scaffolding_Entity_Generator {
 			    '(): requested table does not exist', E_USER_ERROR);
 			return false;
 		}
-		return new ESys_Scaffolding_Entity_Entity($table, $package);
+		return new ESys_Scaffolding_Entity_Entity($table, $package.'_Domain');
 	}
 
 
