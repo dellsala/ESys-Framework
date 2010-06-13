@@ -7,9 +7,6 @@ require_once 'ESys/WebControl/Response.php';
 class ESys_WebControl_Response_ForbiddenTest extends PHPUnit_Framework_TestCase {
 
 
-    /**
-     * @dataProvider dataProvider
-     */
     public function testResponseHas403Header ()
     {
         $response = new ESys_WebControl_Response_Forbidden('');
