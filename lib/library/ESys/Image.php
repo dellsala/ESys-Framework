@@ -123,7 +123,8 @@ class ESys_Image {
      */
     public function savePng ($filePath, $quality = null)
     {
-        exit(__CLASS__.'::'.__FUNCTION__.'() Not implemented.');
+        imagesavealpha($this->imageResource, true);
+        return imagepng($this->imageResource, $filePath, $quality);
     }
 
 
@@ -134,7 +135,7 @@ class ESys_Image {
      */
     public function saveGif ($filePath, $quality = null)
     {
-        exit(__CLASS__.'::'.__FUNCTION__.'() Not implemented.');
+        return imagegif($this->imageResource, $filePath);
     }
 
 
@@ -208,6 +209,8 @@ class ESys_Image {
     public function resize ($newHeight, $newWidth)
     {
         $newImageResource = imagecreatetruecolor($newWidth, $newHeight);
+        imagecolorallocate($newImageResource, 255, 255, 255);
+        imagealphablending($newImageResource, false); //had to put in for transparent pngs
         $resizeResult = imagecopyresampled(
             $newImageResource, $this->imageResource, 0, 0, 0, 0, 
             $newWidth, $newHeight, $this->width(), $this->height()
