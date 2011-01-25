@@ -13,14 +13,14 @@ class ESys_DB_Connection {
     const EVENT_QUERY = 'query';
     const EVENT_CLOSE = 'close';
 
-    private $dbhost;
-    private $dbuser;
-    private $dbpass;
-    private $dbase;
-    private $sqlQuery;
-    private $link;
-    private $queryCount;
-    private $listenerList = array();
+    protected $dbhost;
+    protected $dbuser;
+    protected $dbpass;
+    protected $dbase;
+    protected $sqlQuery;
+    protected $link;
+    protected $queryCount;
+    protected $listenerList = array();
 
 
     /**
@@ -91,7 +91,7 @@ class ESys_DB_Connection {
     }
 
 
-    private function notifyListeners($eventType, $data)
+    protected function notifyListeners($eventType, $data)
     {
         $notification = $data;
         $notification['type'] = $eventType;
@@ -280,8 +280,8 @@ class ESys_DB_Connection {
 class ESys_DB_Connection_Result {
 
 
-    private $result;
-    private $link;
+    protected $result;
+    protected $link;
 
 
     /**
