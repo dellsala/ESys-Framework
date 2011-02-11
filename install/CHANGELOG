@@ -1,4 +1,37 @@
 +----------------+
+| version 1.2.1  |
+| 2011-02-11     |
++----------------+
+
+-- NEW FEATURES --
+
+* ESys_Image: 
+    - implemented savePng() and saveGif()
+    - basic support for png with transparency
+
+* ESys_Memory: 
+    - new class for reporting info about memory
+    - behavior beyond built-in memory functions
+    - provides memory limit in bytes and an available convenience method
+
+* tests: 
+    - added quickdocs script that generates basic behavior 
+      documentation based on unit tests
+
+* build:
+    - added ant build script for generating release archives
+
+-- FIXES --
+
+* ESys_DB_Connection: 
+    - made all private members protected
+
+* ESys_Html_FormBuilder: 
+    - made all private members protected
+
+
+
++----------------+
 | version 1.2.0  |
 | 2010-04-23     |
 +----------------+
