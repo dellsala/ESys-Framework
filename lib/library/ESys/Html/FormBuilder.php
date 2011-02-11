@@ -6,9 +6,9 @@
 class ESys_Html_FormBuilder
 {
 
-    private $autoEcho = true;
+    protected $autoEcho = true;
 
-    private $templates = array(
+    protected $templates = array(
         'text' => '<input type="text" name="%s" value="%s"%s>',
         'textarea' => '<textarea name="%s"%s>%s</textarea>',
         'hidden' => '<input type="hidden" name="%s" value="%s"%s>',
@@ -22,8 +22,8 @@ class ESys_Html_FormBuilder
         'submit' => '<input type="submit" name="%s" value="%s"%s>',
     );
 
-    private $errorFields = array();
-    private $errorClassName = 'error';
+    protected $errorFields = array();
+    protected $errorClassName = 'error';
 
 
     /**
@@ -242,7 +242,7 @@ class ESys_Html_FormBuilder
     }
 
 
-    private function _buildBasicElement ($type, $name, $attributes)
+    protected function _buildBasicElement ($type, $name, $attributes)
     {
         $value = $this->getDataValue($name, '');
         $value = htmlentities($value, ENT_COMPAT, 'UTF-8');
@@ -254,7 +254,7 @@ class ESys_Html_FormBuilder
     }
 
 
-    private function _stringifyAttributes ($attributes)
+    protected function _stringifyAttributes ($attributes)
     {
         if (is_null($attributes)) { return ''; }
         if (! is_array($attributes)) { 
@@ -290,7 +290,7 @@ class ESys_Html_FormBuilder
     }
 
 
-    private function _applyErrorFlag ($name, &$attributes)
+    protected function _applyErrorFlag ($name, &$attributes)
     {
         if (! in_array($name, $this->errorFields)) { return; }
         $attributes['class'] = isset($attributes['class'])
@@ -299,7 +299,7 @@ class ESys_Html_FormBuilder
     }
 
 
-    private function _render ($string)
+    protected function _render ($string)
     {
         if (! $this->autoEcho) {
             return $string;
