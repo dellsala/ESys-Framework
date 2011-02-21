@@ -37,4 +37,14 @@ class ESys_Data_ReportRecordTest extends PHPUnit_Framework_TestCase {
     }
 
 
+    public function testExportsDataToArray ()
+    {
+        $inputArray = array(
+            'first_name' => 'John',
+        );
+        $record = new ESys_Data_ReportRecord($inputArray);
+        $this->assertEquals($inputArray, $record->export());
+    }
+
+
 }

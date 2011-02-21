@@ -45,7 +45,7 @@ class ESys_Data_ReportRecord {
      */
     public function export ()
     {
-        return $record;
+        return $this->record;
     }
 
 
