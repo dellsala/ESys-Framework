@@ -27,8 +27,11 @@ class ESys_Data_Record_FileResource {
     }
 
 
-    public function install ($sourceFileSystemPath, $filename)
+    public function install ($sourceFileSystemPath, $filename = null)
     {
+        if (is_null($filename)) {
+            $filename = basename($sourceFileSystemPath);
+        }
         if (! file_exists($sourceFileSystemPath)) {
             trigger_error(__CLASS__.'::'.__FUNCTION__."() source file ".
                 "'{$sourceFileSystemPath}' not found.", E_USER_WARNING);
