@@ -1,4 +1,25 @@
 +----------------+
+| version 1.2.2  |
+| 2011-10-26     |
++----------------+
+
+-- NEW FEATURES --
+
+* build:
+    - updated build script to work with git repository instead of svn
+
+* ESys_Data_Record_FileResource:
+    - stores and manages a file within a targeted directory
+    - useful for managing files attached to other data
+    - unit tests
+
+-- FIXES --
+
+* ESys_Data_ReportRecord: 
+    - fixed broken export() method
+
+
++----------------+
 | version 1.2.1  |
 | 2011-02-11     |
 +----------------+
