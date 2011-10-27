@@ -17,19 +17,20 @@
         <delete dir="${outputdir}"/>
         <delete dir="${tempdir}"/>
         <mkdir dir="${outputdir}"/>
+        <mkdir dir="${tempdir}"/>
     </target>
 
     <target name="export" depends="prepdirs">
-        <mkdir dir="${tempdir}"/>
-        <echo message="exporting tag ${version} from svn repo..."/>
+        <echo message="git archive of tag ${version}..."/>
         <exec executable="bash" failonerror="true">
             <arg value="-c" />
-            <arg value="svn export http://svn.sala.ca/webapp/tags/${version} ${tempdir}/${exportName}; exit $?" />
+            <arg value="git archive -v --prefix=${exportName}/ ${version} | tar -x -C ${tempdir}; exit $?" />
         </exec>
         <available file="${tempdir}/${exportName}" property="sourceWasExported"/>
-        <fail message="failed to export source from svn repo"><condition>
+        <fail message="failed to export source from git"><condition>
             <isfalse value="${sourceWasExported}"/>
         </condition></fail>
+        <delete file="${tempdir}/${exportName}/.gitignore"/>
         <delete dir="${tempdir}/${exportName}/build"/>
         <tar destfile="${outputdir}/${exportName}.tgz" basedir="${tempdir}" compression="gzip"/>
         <copy file="${tempdir}/${exportName}/install/CHANGELOG" todir="${outputdir}"/>
