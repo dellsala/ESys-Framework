@@ -1,4 +1,16 @@
 +----------------+
+| version 1.2.3  |
+| 2011-10-27     |
++----------------+
+
+-- NEW FEATURES --
+
+* ESys_Data_Record_FileResourceImage:
+    - version of the file resource for managing images
+    - resizes images by height and width on request
+
+
++----------------+
 | version 1.2.2  |
 | 2011-10-26     |
 +----------------+
