@@ -77,7 +77,7 @@ class ESys_Admin_ResponseFactory extends ESys_WebControl_ResponseFactory {
         $title = 'Forbidden';
         $content = $this->createAlertContent(
             new ESys_Message_Error(
-                $data->get('content', '<b>Forbidden!</b><br>You arenÕt allowed to access this page.')
+                $data->get('content', '<b>Forbidden!</b><br>You arenâ€™t allowed to access this page.')
             )
         );
         return new ESys_WebControl_Response_Forbidden(
