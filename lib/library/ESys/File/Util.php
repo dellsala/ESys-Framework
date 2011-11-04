@@ -141,6 +141,7 @@ class ESys_File_Util {
             'dll' => 'application/octet-stream',
             'dms' => 'application/octet-stream',
             'doc' => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'dtd' => 'text/xml',
             'dvi' => 'application/x-dvi',
             'dwg' => 'application/octet-stream',
@@ -272,7 +273,7 @@ class ESys_File_Util {
             'zip' => 'application/zip',
         );
         $pathInfo = pathinfo($filePath);
-        $extension = $pathInfo['extension'];
+        $extension = strtolower($pathInfo['extension']);
         $mimeType = isset($mimeTypeByExtension[$extension])
             ? $mimeTypeByExtension[$extension]
             : 'application/octet-stream';
