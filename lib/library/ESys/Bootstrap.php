@@ -124,7 +124,8 @@ class ESys_Bootstrap {
         $db = new ESys_DB_Connection(
             $conf->get('databaseUser'),
             $conf->get('databasePassword'),
-            $conf->get('databaseName')
+            $conf->get('databaseName'),
+            $conf->get('databaseHost')
         );
         if ($conf->get('databaseLogEvents')) {
             $logFile = $conf->get('libPath').'/data/log/database.log';
