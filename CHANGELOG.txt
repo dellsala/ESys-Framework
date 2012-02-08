@@ -1,4 +1,32 @@
 +----------------+
+| version 1.2.4  |
+| 2012-02-08     |
++----------------+
+
+-- MINOR UPDATES --
+
+* LICENSE.txt:
+    - added a BSD 3-Clause license
+
+* CHANGELOG.txt
+    - moved changelog to root
+
+* removing deploy script from repo
+
+-- FIXES --
+
+* ESys_Bootstrap:
+    - initDatabaseConnection(): fixed - wasn't passing host name from config
+
+* ESys_File_Util:
+    - mimeType(): added docx mimetype
+    - mimeType(): no longer case sensitive
+
+* ESys_Admin_ResponseFactory:
+    - minor utf-8 issue with error message
+
+
++----------------+
 | version 1.2.3  |
 | 2011-10-27     |
 +----------------+
