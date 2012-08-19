@@ -7,13 +7,13 @@
 class ESys_Pager {
 
 
-    private $itemCount = 0;
+    protected $itemCount = 0;
 
 
-    private $itemsPerPage = 10;
+    protected $itemsPerPage = 10;
 
 
-    private $selectedPage = 1;
+    protected $selectedPage = 1;
 
 
     public function __construct ()
@@ -140,10 +140,10 @@ class ESys_Pager {
 class ESys_PagerItemRange {
 
 
-    private $start;
+    protected $start;
     
     
-    private $length;
+    protected $length;
 
 
     /**

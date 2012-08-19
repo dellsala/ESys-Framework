@@ -1,4 +1,26 @@
 +----------------+
+| version 1.2.5  |
+| 2012-08-19     |
++----------------+
+
+-- MINOR UPDATES --
+
+* ESys_AutoLoader: 
+    - fixing test - spl_autoload_functions() returns different value in php 5.3
+
+* ESys_Calendar: fixed errors in tests for calculating number of days in a month
+
+* ESys_Session:
+    - removing unnecessary dependency on ESys_Application::get('config')
+
+* ESys_Pager: 
+    - changed private properties to protected
+    - preliminary unit tests
+
+* added ignore rules for config and netbeans ide
+
+
++----------------+
 | version 1.2.4  |
 | 2012-02-08     |
 +----------------+

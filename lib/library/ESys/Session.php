@@ -17,7 +17,6 @@ class ESys_Session {
      */
     public function __construct ($sessionName, $maxInactivity = null, $savePath = null)
     {
-        $config = ESys_Application::get('config');
         if (session_id()) {
             trigger_error(__CLASS__.'::'.__FUNCTION__.'(): session has already been '.
                 'started. Session may not behave correclty.', E_USER_WARNING);

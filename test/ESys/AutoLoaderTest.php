@@ -24,7 +24,7 @@ class ESys_AutoLoaderTest extends PHPUnit_Framework_TestCase {
             $functionList = array();
         }
         $this->assertTrue(
-            in_array(array(get_class($this->autoLoader), 'load'), $functionList),
+            in_array(array($this->autoLoader, 'load'), $functionList),
             'autoloader expected in registered function list'
         );
     }

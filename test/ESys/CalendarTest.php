@@ -23,13 +23,16 @@ class ESys_CalendarTest extends PHPUnit_Framework_TestCase {
 
     public function testCalculatesDaysInMonth ()
     {
-        $this->assertEquals(28, ESys_Calendar::daysInMonth(2));
+        $this->assertEquals(31, ESys_Calendar::daysInMonth(1));
     }
 
 
     public function testCalculatesDaysInMonthWithYearContext ()
     {
-        $this->assertEquals(29, ESys_Calendar::daysInMonth(2, 2004));
+        $leapYear = 2004;
+        $nonLeapYear = 1900;
+        $this->assertEquals(28, ESys_Calendar::daysInMonth(2, $nonLeapYear));
+        $this->assertEquals(29, ESys_Calendar::daysInMonth(2, $leapYear));
     }
 
 
