@@ -1,4 +1,30 @@
 +----------------+
+| version 1.2.6  |
+| 2012-08-23     |
++----------------+
+
+-- NEW FEATURES --
+
+* ESys_WebControl_Controller:
+    - now handles url actions that include hyphens. Hyphens map to camel case action names.
+    - added buildResponse() method. to be used as a place to implement response details that are common to a controller.
+    - deprecated commonResponseData()
+
+* ESys_WebControl_ResponseFactory: 
+    - implemented a renderLayout hook where common outer layout can be added
+
+* ESys_Session: 
+    - reworked implementation. No longer uses double-reload hack to load incomplete objects. 
+    - Now relies on the presence of an autoloader.
+    - changed private properties to protected
+
+* ESys_DB
+    - changed implementation to use mysqli instead of mysql.
+
+* explicitly adding some missing data folders, updating ignore rules for log and session data
+
+
++----------------+
 | version 1.2.5  |
 | 2012-08-19     |
 +----------------+
