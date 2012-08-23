@@ -7,7 +7,7 @@ require_once 'ESys/File/Util.php';
 class ESys_Session {
 
 
-    private $maxInactivity = null;
+    protected $maxInactivity = null;
 
 
     /**
@@ -32,7 +32,7 @@ class ESys_Session {
         }
     }
     
-    private function lazySessionStart ()
+    protected function lazySessionStart ()
     {
         if (session_id()) {
             return;
@@ -190,9 +190,9 @@ class ESys_Session {
  */
 class ESys_Session_Object {
 
-      private $className;
-      private $classFile;
-      private $object;
+      protected $className;
+      protected $classFile;
+      protected $object;
       
       /**
        * @param object $object
