@@ -38,7 +38,7 @@ class ESys_WebControl_Controller
         } else if (empty($action)) {
             $actionMethod = 'doDefault';
         } else {
-            $actionMethod = 'do'.ucfirst(strtolower($action));
+            $actionMethod = 'do'.str_replace(' ', '', ucwords(str_replace('-', ' ', $action)));
         }
         if (! method_exists($this, $actionMethod)) {
             $actionMethod = 'doDefault';

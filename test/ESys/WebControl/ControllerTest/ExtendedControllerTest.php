@@ -41,6 +41,14 @@ class ESys_WebControl_ControllerTest_ExtendedControllerTest extends PHPUnit_Fram
     }
 
 
+    public function testHandlesActionWithHyphen ()
+    {
+        $request = $this->requestBuilder->createFromAction('my-action');
+        $response = $this->controller->handleRequest($request);
+        $this->assertType('ESys_WebControl_Response_Ok', $response);
+    }
+    
+
     /**
      * @dataProvider forbiddenActionData
      */
@@ -76,19 +84,21 @@ class ESys_WebControl_ControllerTest_ExtendedControllerTest_ExtendedController
     extends ESys_WebControl_Controller 
 {
 
-
     protected function doIndex ($request)
     {
         return new ESys_WebControl_Response_Ok('index action output');
     }
 
-
     protected function doTest ($request)
     {
         return new ESys_WebControl_Response_Ok("test action output");
     }
-
-
+    
+    protected function doMyAction ($request)
+    {
+        return new ESys_WebControl_Response_Ok("myAction action output");
+    }
+    
 }
 
 
