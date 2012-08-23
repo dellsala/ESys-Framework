@@ -49,20 +49,20 @@ class ESys_DB_Connection {
             return true;
         }
         $startTime = microtime(true);
-        $this->link = @mysql_connect($this->dbhost, $this->dbuser, $this->dbpass);
+        $this->link = mysqli_connect($this->dbhost, $this->dbuser, $this->dbpass);
         $elapsedTime = round(microtime(true) - $startTime, 4);
         if (! $this->link) {
             $this->notifyListeners(self::EVENT_ERROR, array(
-                'code' => mysql_errno(),
-                'message' => mysql_error(),
+                'code' => mysqli_errno(),
+                'message' => mysqli_error(),
             ));
             trigger_error('ESys_DB_Connection: database connection failed', E_USER_WARNING);
             return false; 
         }
-        if (! @mysql_select_db($this->dbase, $this->link)) {
+        if (! mysqli_select_db($this->link, $this->dbase)) {
             $this->notifyListeners(self::EVENT_ERROR, array(
-                'code' => mysql_errno($this->link),
-                'message' => mysql_error($this->link),
+                'code' => mysqli_errno($this->link),
+                'message' => mysqli_error($this->link),
             ));
             trigger_error('ESys_DB_Connection: database selection failed', E_USER_WARNING);
             return false;
@@ -71,7 +71,7 @@ class ESys_DB_Connection {
             'message' => "{$this->dbuser}@{$this->dbhost}:{$this->dbase} connected",
             'time' => $elapsedTime,
         ));
-        $this->query("SET NAMES 'utf8'");
+        mysqli_set_charset($this->link, 'utf8');
         return true;
     }
 
@@ -107,8 +107,8 @@ class ESys_DB_Connection {
      */
     public function describeError ($textMode = false)
     {
-        $errorMsg = $this->link ? mysql_error($this->link) : mysql_error();
-        $errorNo = $this->link ? mysql_errno($this->link) : mysql_errno();
+        $errorMsg = $this->link ? mysqli_error($this->link) : mysqli_error();
+        $errorNo = $this->link ? mysqli_errno($this->link) : mysqli_errno();
         $sqlQuery = $this->sqlQuery;
         $errorDate = date("F j, Y, g:i a");
         $errorString = array();
@@ -133,7 +133,7 @@ class ESys_DB_Connection {
      */
     public function close ()
     {
-        mysql_close($this->link);
+        mysqli_close($this->link);
         $this->notifyListeners(self::EVENT_CLOSE, array(
             'message' => 'Connection closed.',
         ));
@@ -164,7 +164,7 @@ class ESys_DB_Connection {
             return false;
         }
         $startTime = microtime(true);
-        $sqlResult = @mysql_query($this->sqlQuery, $this->link);
+        $sqlResult = mysqli_query($this->link, $this->sqlQuery);
         $elapsedTime = round(microtime(true) - $startTime, 4);
         $this->notifyListeners(self::EVENT_QUERY, array(
             'query' => $query,
@@ -172,8 +172,8 @@ class ESys_DB_Connection {
         ));
         if ($sqlResult === false) {
             $this->notifyListeners(self::EVENT_ERROR, array(
-                'code' => mysql_errno($this->link),
-                'message' => mysql_error($this->link),
+                'code' => mysqli_errno($this->link),
+                'message' => mysqli_error($this->link),
             ));
             trigger_error(__CLASS__.'::'.__FUNCTION__."(): query failed --\n".
                 $this->describeError(true), E_USER_WARNING);
@@ -229,7 +229,7 @@ class ESys_DB_Connection {
      */
     public function countAffectedRows ()
     {
-        $affectedRowCount = mysql_affected_rows($this->link);
+        $affectedRowCount = mysqli_affected_rows($this->link);
         return $affectedRowCount;
     }        
     
@@ -239,7 +239,7 @@ class ESys_DB_Connection {
      */
   	public function getInsertId ()
 	{
-        return mysql_insert_id($this->link);
+        return mysqli_insert_id($this->link);
 	}
 	
 
@@ -259,7 +259,7 @@ class ESys_DB_Connection {
     public function escape ($value)
     {
         $this->connect();
-        return mysql_real_escape_string($value, $this->link);
+        return mysqli_real_escape_string($this->link, $value);
     }
 
 
@@ -300,7 +300,7 @@ class ESys_DB_Connection_Result {
      */
     public function count ()
     {
-        $rowCount = mysql_num_rows($this->result);
+        $rowCount = mysqli_num_rows($this->result);
         if ($rowCount === false) { 
             trigger_error(__CLASS__.'::'.__FUNCTION__.'(): could not count rows', E_USER_WARNING);
             return false;
@@ -314,7 +314,7 @@ class ESys_DB_Connection_Result {
      */
     public function fetch ()
     {
-        $row = mysql_fetch_assoc($this->result);
+        $row = mysqli_fetch_assoc($this->result);
         if (! is_array($row)) { return false; }
         return $row;
     }
@@ -325,7 +325,7 @@ class ESys_DB_Connection_Result {
      */
     public function free ()
     {
-        mysql_free_result($this->result);
+        mysqli_free_result($this->result);
     }
 
 
