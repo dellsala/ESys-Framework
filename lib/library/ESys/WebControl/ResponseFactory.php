@@ -10,7 +10,6 @@ class ESys_WebControl_ResponseFactory {
 
     protected $commonData = array();
 
-
     protected $request;
 
 
@@ -58,8 +57,9 @@ class ESys_WebControl_ResponseFactory {
         if (! array_key_exists('content', $data)) {
             $data['content'] = 'Resource not found';
         }
+        $data['responseType'] = 'notFound';
         return new ESys_WebControl_Response_NotFound(
-            $data['content']
+            $this->renderLayout($data)
         );
     }
 
@@ -69,8 +69,9 @@ class ESys_WebControl_ResponseFactory {
         if (! array_key_exists('content', $data)) {
             $data['content'] = 'Unexpected error';
         }
+        $data['responseType'] = 'error';
         return new ESys_WebControl_Response_Error(
-            $data['content']
+            $this->renderLayout($data)
         );
     }
 
@@ -80,16 +81,18 @@ class ESys_WebControl_ResponseFactory {
         if (! array_key_exists('content', $data)) {
             $data['content'] = 'Forbidden';
         }
+        $data['responseType'] = 'forbidden';
         return new ESys_WebControl_Response_Forbidden(
-            $data['content']
+            $this->renderLayout($data)
         );
     }
 
 
     protected function buildOk ($data)
     {
+        $data['responseType'] = 'ok';
         return new ESys_WebControl_Response_Ok(
-            $data['content']
+            $this->renderLayout($data)
         );
     }
 
@@ -105,6 +108,19 @@ class ESys_WebControl_ResponseFactory {
         );
     }
 
-
+    /**
+     * Hook for rendering response data into a common output format.
+     * 
+     * By default, this just passes throught $data['content'] unchanged.
+     * Override in subclass to implement your own rendering format.
+     * 
+     * @param type $data
+     * @return type 
+     */
+    protected function renderLayout ($data)
+    {
+        return $data['content'];
+    }
+    
 
 }

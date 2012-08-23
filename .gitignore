@@ -1,3 +1,5 @@
 .htaccess
 /nbproject
 /lib/data/conf/config.ini
+/lib/data/log/*
+/lib/data/session/*

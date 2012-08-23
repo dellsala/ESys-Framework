@@ -38,7 +38,7 @@ class ESys_WebControl_Controller
         } else if (empty($action)) {
             $actionMethod = 'doDefault';
         } else {
-            $actionMethod = 'do'.ucfirst(strtolower($action));
+            $actionMethod = 'do'.str_replace(' ', '', ucwords(str_replace('-', ' ', $action)));
         }
         if (! method_exists($this, $actionMethod)) {
             $actionMethod = 'doDefault';
@@ -118,12 +118,28 @@ class ESys_WebControl_Controller
 
 
     /**
+     * Template method for building responses for this controller. Provides
+     * a hook for handling response details that are shared within this 
+     * controller.
+     * 
+     * Use this instead of ESys_WebControl_Controller::commonResponseData.
+     *
+     * @return array
+     */
+    public function buildResponse ($type, $data = null)
+    {
+        return $this->getResponseFactory()->build($type, $data);
+    }
+    
+    
+    /**
      * Template method that returns common data on the
      * response factory when it is assigned to the controller.
      *
      * Override this in sub-classes to provide response data that will be
      * common to all factory generated responses within the controller.
      *
+     * @deprecated
      * @return array
      */
     protected function commonResponseData ()

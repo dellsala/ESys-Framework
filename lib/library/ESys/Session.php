@@ -3,11 +3,13 @@ require_once 'ESys/File/Util.php';
 
 /**
  * @package ESys
+ * 
+ * All objects saved to sessions must be loadable via a registered autoloader.
  */
 class ESys_Session {
 
 
-    private $maxInactivity = null;
+    protected $maxInactivity = null;
 
 
     /**
@@ -31,8 +33,9 @@ class ESys_Session {
             $this->lazySessionStart();
         }
     }
+
     
-    private function lazySessionStart ()
+    protected function lazySessionStart ()
     {
         if (session_id()) {
             return;
@@ -48,39 +51,9 @@ class ESys_Session {
             }
             $this->set(__CLASS__, 'lastActivity', time());
         }
-        $_SESSION[__CLASS__] = isset($_SESSION[__CLASS__]) ? $_SESSION[__CLASS__] : array();
-        foreach($_SESSION[__CLASS__] as $package=>$key) {
-            $_SESSION[__CLASS__][$package] = isset($_SESSION[__CLASS__][$package]) 
-                ? $_SESSION[__CLASS__][$package] 
-                : array();
-            foreach($_SESSION[__CLASS__][$package] as $value) {
-                if (! ($value instanceof ESys_Session_Object)) {
-                    continue;
-                }
-                $className = $value->getClassName();
-                if (class_exists($className)) {
-                    continue;
-                }
-                $classFile = $value->getClassFile();
-                if (ESys_File_Util::isIncludable($classFile)) {
-                    include_once $classFile;
-                } else {
-                    $isFileIncluded = false;
-                    $classNamePartList = explode('_', $className);
-                    foreach($classNamePartList as $i=>$part) {
-                        $filePath = implode('/', array_slice($classNamePartList, 0, $i+1)).'.php';
-                        if (ESys_File_Util::isIncludable($filePath)) {
-                            include_once $filePath;
-                            $isFileIncluded = true;
-                        }
-                    }
-                    trigger_error(__CLASS__.'::'.__FUNCTION__.
-                        '(): class file not found for '.$className.'.', E_USER_WARNING);
-                }
-            }
+        if (!array_key_exists(__CLASS__, $_SESSION)) {
+            $_SESSION = array();
         }
-        session_write_close();
-        session_start();
     }
 
     
@@ -94,9 +67,6 @@ class ESys_Session {
     public function set ($package, $key, $value, $classFile = null)
     {
         $this->lazySessionStart();
-        if (is_object($value)) {
-            $value = new ESys_Session_Object($value, $classFile);
-        }
         $_SESSION[__CLASS__][$package][$key] = $value;        
     }
 
@@ -112,9 +82,12 @@ class ESys_Session {
         if (!isset($_SESSION[__CLASS__][$package][$key])) {
             return null;
         }
-        $value = ($_SESSION[__CLASS__][$package][$key] instanceof ESys_Session_Object) 
-            ? $_SESSION[__CLASS__][$package][$key]->getObject()
-            : $_SESSION[__CLASS__][$package][$key];
+        $value = $_SESSION[__CLASS__][$package][$key];
+        if ($value instanceof __PHP_Incomplete_Class) {
+            trigger_error(__METHOD__.'() you are accessing an inclomplete '.
+                'object that failed to unserialize correctly. make sure you '.
+                'have an autoloader registered. ', E_USER_WARNING);
+        }
         return $value;
     }
 
@@ -184,55 +157,3 @@ class ESys_Session {
 
 }
 
-
-/**
- * @package ESys
- */
-class ESys_Session_Object {
-
-      private $className;
-      private $classFile;
-      private $object;
-      
-      /**
-       * @param object $object
-       * @param string $classFile
-       */
-      public function __construct ($object, $classFile = null)
-      {
-          $this->className = get_class($object);
-          if ($classFile) {
-              $this->classFile = $classFile;
-          } else {              
-              $this->classFile = str_replace('_', '/', $this->className).'.php';
-          }
-          $this->object = $object;
-      }
-      
-      
-      /**
-       * @return string
-       */
-      public function getClassName ()
-      {
-          return $this->className;
-      }
-      
-
-      /**
-       * @return string
-       */
-      public function getClassFile ()
-      {
-          return $this->classFile;
-      }
-      
-      
-      /**
-       * @return object
-       */
-      public function getObject ()
-      {
-          return $this->object;
-      }
-}
