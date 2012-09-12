@@ -17,11 +17,16 @@ class ESys_Email_Factory {
     }
 
 
-    public function newMessage ()
+    public function newMessage ($propertyList = array())
     {
-        $message = new ESys_Email_Message();
-        $message->setTo($this->systemAddress);
-        $message->setFrom($this->systemAddress);
+        
+        if (! isset($propertyList['to'])) {
+            $propertyList['to'] = $this->systemAddress;
+        }
+        if (! isset($propertyList['from'])) {
+            $propertyList['from'] = $this->systemAddress;
+        }
+        $message = new ESys_Email_Message($propertyList);
         return $message;
     }
 
