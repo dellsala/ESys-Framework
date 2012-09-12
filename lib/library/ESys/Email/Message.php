@@ -65,6 +65,9 @@ class ESys_Email_Message {
     public function setTo ($to)
     {
         $this->to = $to;
+        if (! is_array($this->to)) {
+            $this->to = array($this->to);
+        }
     }
 
 
