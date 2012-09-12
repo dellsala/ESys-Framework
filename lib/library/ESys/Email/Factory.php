@@ -22,8 +22,8 @@ class ESys_Email_Factory {
     public function newMessage ()
     {
         $message = new ESys_Email_Message();
-        $message->set('to', $this->systemAddress);
-        $message->set('from', $this->systemAddress);
+        $message->setTo($this->systemAddress);
+        $message->setFrom($this->systemAddress);
         return $message;
     }
 

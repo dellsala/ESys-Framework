@@ -33,7 +33,7 @@ class ESys_Email_Transmitter_ZendMailSmtp implements ESys_Email_Transmitter {
     {
         $mail = $this->createZendMail($message);
         try {
-            $mail->send($this->getTransport());        
+            $mail->send($this->getTransport());
         } catch (Zend_Mail_Exception $e) {
             trigger_error(get_class($this).'::'.__FUNCTION__."(): sending failed: ".get_class($e)." {$e->getMessage()}", E_USER_WARNING);
             return false;
@@ -49,15 +49,15 @@ class ESys_Email_Transmitter_ZendMailSmtp implements ESys_Email_Transmitter {
     protected function createZendMail (ESys_Email_Message $message)
     {
         $mail = new Zend_Mail('UTF-8');
-        $mail->setBodyText($message->get('bodyText'));
-        if ($html = $message->get('bodyHtml')) {
+        $mail->setBodyText($message->bodyText());
+        if ($html = $message->bodyHtml()) {
             $mail->setBodyHtml($html);
         }
-        $mail->setFrom($message->get('from'));
-        foreach ($message->get('to') as $address) {
+        $mail->setFrom($message->from());
+        foreach ($message->to() as $address) {
             $mail->addTo($address);
         }
-        $mail->setSubject($message->get('subject'));
+        $mail->setSubject($message->subject());
         return $mail;
     }
 

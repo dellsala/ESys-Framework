@@ -21,9 +21,9 @@ class ESys_Email_Transmitter_SendmailIntercept implements ESys_Email_Transmitter
      */
     public function send (ESys_Email_Message $message)
     {
-        $originalRecipientList = $message->get('to');
-        $originalBodyText = $message->get('bodyText');
-        $message->set('to', $this->interceptAddress);
+        $originalRecipientList = $message->to();
+        $originalBodyText = $message->bodyText();
+        $message->setTo($this->interceptAddress);
         ob_start();
 ?>
 --------------------------------------------
@@ -33,7 +33,7 @@ EMAIL INTERCEPT MODE -- Original Recipients:
 
 <?php
         echo $originalBodyText;
-        $message->set('bodyText', ob_get_clean());
+        $message->setBodyText(ob_get_clean());
         $transmitter = new ESys_Email_Transmitter_Sendmail();
         return $transmitter->send($message);
     }

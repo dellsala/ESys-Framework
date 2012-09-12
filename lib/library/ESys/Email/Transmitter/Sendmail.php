@@ -21,14 +21,14 @@ class ESys_Email_Transmitter_Sendmail implements ESys_Email_Transmitter {
      */
     public function send (ESys_Email_Message $message)
     {
-        if ($message->get('bodyHtml')) {
+        if ($message->bodyHtml()) {
             trigger_error(__CLASS__.'::'.__FUNCTION__.'() non-empty html body found. '.
                 'Html not currently supported by this transport.', E_USER_NOTICE);
         }
-        $messageBody = $message->get('bodyText');
-        $messageRecipient = implode(', ',$message->get('to'));
-        $messsageHeaders = 'From: '.$this->sanitizeForEmail($message->get('from'));
-        $messageSubject = $this->sanitizeForEmail($message->get('subject'));
+        $messageBody = $message->bodyText();
+        $messageRecipient = implode(', ', $message->to());
+        $messsageHeaders = 'From: '.$this->sanitizeForEmail($message->from());
+        $messageSubject = $this->sanitizeForEmail($message->subject());
         return mail($messageRecipient, $messageSubject, $messageBody, $messsageHeaders);
     }
 
@@ -40,3 +40,5 @@ class ESys_Email_Transmitter_Sendmail implements ESys_Email_Transmitter {
 
 
 }
+            
+            
