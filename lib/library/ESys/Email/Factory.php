@@ -1,7 +1,5 @@
 <?php
 
-require_once 'ESys/ArrayAccessor.php';
-require_once 'ESysX/Email/Message.php';
 
 class ESys_Email_Factory {
 
@@ -41,31 +39,27 @@ class ESys_Email_Factory {
 
     protected function buildSilentTransmitter ()
     {
-        require_once 'ESysX/Email/Transmitter/NullStub.php';
         return new ESys_Email_Transmitter_NullStub();
     }
 
 
     protected function buildSendmailTransmitter ()
     {
-        require_once 'ESysX/Email/Transmitter/Sendmail.php';
         return new ESys_Email_Transmitter_Sendmail();
     }
 
 
     protected function buildSendmailInterceptTransmitter ()
     {
-        require_once 'ESysX/Email/Transmitter/SendmailIntercept.php';
         return new ESys_Email_Transmitter_SendmailIntercept($this->transmitterConfig['interceptAddress']);
     }
 
 
-    protected function buildInterceptTransmitter ()
+    protected function buildSmtpInterceptTransmitter ()
     {
         $smtpConfig = $this->getSmtpConfig();
         $smtpConfig['interceptAddress'] = $this->transmitterConfig['interceptAddress'];
         $smtpHost = $this->transmitterConfig['smtpHost'];
-        require_once 'ESysX/Email/Transmitter/ZendMailSmtpIntercept.php';
         return new ESys_Email_Transmitter_ZendMailSmtpIntercept(
             $smtpHost,
             $smtpConfig
@@ -77,7 +71,6 @@ class ESys_Email_Factory {
     {
         $smtpConfig = $this->getSmtpConfig();
         $smtpHost = $this->transmitterConfig['smtpHost'];
-        require_once 'ESysX/Email/Transmitter/ZendMailSmtp.php';
         return new ESys_Email_Transmitter_ZendMailSmtp(
             $smtpHost,
             $smtpConfig
