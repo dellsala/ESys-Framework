@@ -2,9 +2,11 @@
 require_once 'ESys/File/Util.php';
 
 /**
- * @package ESys
- * 
+ * Session management.
+ *
  * All objects saved to sessions must be loadable via a registered autoloader.
+ *
+ * @package ESys
  */
 class ESys_Session {
 

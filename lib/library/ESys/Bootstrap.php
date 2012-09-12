@@ -189,8 +189,24 @@ class ESys_Bootstrap {
         $autoLoader->register();
         ESys_Application::set('autoLoader', $autoLoader);
     }
-
-
+    
+    
+    public static function initEmail ()
+    {
+        $config = ESys_Application::get('config');
+        $emailFactory = new ESys_Email_Factory(array(
+            'systemAddress' => $config->get('ESys_Email', 'systemAddress'),
+            'transmitterConfig' => array(
+                'type' => $config->get('ESys_Email', 'mode'),
+                'interceptAddress' => $config->get('ESys_Email', 'interceptAddress'),
+                'smtpHost' => $config->get('ESys_Email', 'smtpHost'),
+                'smtpPort' => $config->get('ESys_Email', 'smtpPort'),
+                'smtpUsername' => $config->get('ESys_Email', 'smtpUsername'),
+                'smtpPassword' => $config->get('ESys_Email', 'smtpPassword'),
+            )
+        ));
+        ESys_Application::set('emailFactory', $emailFactory);
+    }
 
 
 }
