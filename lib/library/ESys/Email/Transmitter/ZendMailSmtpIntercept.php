@@ -1,6 +1,5 @@
 <?php
 
-require_once 'ESysX/Email/Transmitter/ZendMailSmtp.php';
 
 /**
  * @package AvalonRentals

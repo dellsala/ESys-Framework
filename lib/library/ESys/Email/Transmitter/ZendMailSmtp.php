@@ -2,7 +2,6 @@
 
 require_once 'Zend/Mail.php';
 require_once 'Zend/Mail/Transport/Smtp.php';
-require_once 'ESysX/Email/Transmitter.php';
 
 /**
  * @package ESys
