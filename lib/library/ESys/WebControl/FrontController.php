@@ -2,6 +2,7 @@
 
 require_once 'ESys/WebControl/Request.php';
 require_once 'ESys/WebControl/ResponseFactory.php';
+require_once 'ESys/WebControl/ControllerFactory.php';
 
 
 /**
@@ -16,6 +17,8 @@ class ESys_WebControl_FrontController
     protected $scriptPath;
 
     protected $responseFactory;
+    
+    protected $controllerFactory;
 
     private $pathMap = array();
 
@@ -73,6 +76,26 @@ class ESys_WebControl_FrontController
     }
 
 
+    /**
+     * @param ESys_WebControl_ControllerFactory
+     * @return void
+     */
+    public function setControllerFactory (ESys_WebControl_ControllerFactory $factory)
+    {
+        $this->controllerFactory = $factory;
+    }
+
+    
+    /**
+     * @return ESys_WebControl_ControllerFactory
+     */
+    protected function getControllerFactory ()
+    {
+        if (! $this->controllerFactory) {
+            $this->controllerFactory = new ESys_WebControl_ControllerFactory();
+        }
+        return $this->controllerFactory;
+    }
 
 
     /**
@@ -134,16 +157,12 @@ class ESys_WebControl_FrontController
      */
     protected function buildController ($controllerClassName, $request)
     {
-        if (! class_exists($controllerClassName)) {
-            $classFileName = str_replace('_', '/', $controllerClassName).'.php';
-            include_once($classFileName);
-            if (! class_exists($controllerClassName)) {
-                trigger_error(__CLASS__.'::'.__FUNCTION__.'() unable to load '.
-                    "mapped class '{$controllerClassName}'", E_USER_WARNING);
-                return null;
-            }
+        $controller = $this->getControllerFactory()->build($controllerClassName);
+        if (! $controller) {
+            trigger_error(__CLASS__.'::'.__FUNCTION__.'() unable to load '.
+                "mapped class '{$controllerClassName}'", E_USER_WARNING);
+            return null;
         }
-        $controller = new $controllerClassName();
         $responseFactory = $this->getResponseFactory();
         $responseFactory->setRequest($request);
         $controller->setResponseFactory($responseFactory);

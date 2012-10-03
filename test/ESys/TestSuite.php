@@ -14,9 +14,6 @@ class ESys_TestSuite extends PHPUnit_Framework_TestSuite {
     {
         $coverageBaseDir = dirname(dirname(dirname(__FILE__))).'/lib/library/ESys';
         PHPUnit_Util_Filter::addDirectoryToWhitelist($coverageBaseDir);
-        PHPUnit_Util_Filter::removeFileFromWhitelist($coverageBaseDir.'/Feed/BlipTv.php');
-        PHPUnit_Util_Filter::removeFileFromWhitelist($coverageBaseDir.'/Feed/YouTube.php');
-        PHPUnit_Util_Filter::removeFileFromWhitelist($coverageBaseDir.'/MicroCms.php');
     }
 
 

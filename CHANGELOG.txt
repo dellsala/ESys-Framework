@@ -1,4 +1,20 @@
 +----------------+
+| version 1.2.8  |
+| 2012-10-03     |
++----------------+
+
+-- NEW FEATURES --
+
+* ESys_WebControl_ControllerFactory:
+    - new component for instantiating controllers
+
+* ESys_WebControl_FrontController:
+    - now uses a controller factory when instantiating controllers
+    - controller factory can be injected
+    - default controller factory used if not injected
+
+
++----------------+
 | version 1.2.7  |
 | 2012-09-12     |
 +----------------+
