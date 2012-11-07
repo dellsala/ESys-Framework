@@ -273,7 +273,7 @@ class ESys_File_Util {
             'zip' => 'application/zip',
         );
         $pathInfo = pathinfo($filePath);
-        $extension = strtolower($pathInfo['extension']);
+        $extension = isset($pathInfo['extension']) ? strtolower($pathInfo['extension']) : null;
         $mimeType = isset($mimeTypeByExtension[$extension])
             ? $mimeTypeByExtension[$extension]
             : 'application/octet-stream';
