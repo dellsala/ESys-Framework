@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package ESys
+ */
 
 /**
  * Provides information about system memory.

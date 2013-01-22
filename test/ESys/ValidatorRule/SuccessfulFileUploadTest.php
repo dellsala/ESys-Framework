@@ -1,7 +1,7 @@
 <?php
 
 require_once 'PHPUnit/Framework.php';
-require_once 'ESys/Validator.php';
+require_once 'ESys/ValidatorRule.php';
 require_once 'ESys/ValidatorRule/FileUploadStub.php';
 
 

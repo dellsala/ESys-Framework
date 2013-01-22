@@ -1,9 +1,8 @@
 <?php
-
-
 /**
- * @package AvalonRentals
+ * @package ESys
  */
+
 class ESys_Email_Transmitter_ZendMailSmtpIntercept extends ESys_Email_Transmitter_ZendMailSmtp {
 
 
