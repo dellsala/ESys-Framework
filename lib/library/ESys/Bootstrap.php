@@ -1,8 +1,11 @@
 <?php
+/**
+ * @package ESys
+ */
 
 
 /**
- * @package ESys
+ *
  */
 class ESys_Bootstrap {
 

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package ESys
+ */
 
 class ESys_Email_Transmitter_NullStub {
 

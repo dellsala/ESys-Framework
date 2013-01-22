@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package ESys
+ */
 
 /**
  * For now, only supports text email (not html).
