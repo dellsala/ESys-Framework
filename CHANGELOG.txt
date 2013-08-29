@@ -1,4 +1,25 @@
 +----------------+
+| version 1.2.9  |
+| 2013-01-22     |
++----------------+
+
+-- NEW FEATURES --
+
+* ESys_ValidatorRule_NotEmpty:
+	- new validator for enforcing non-empty values. 
+	- fails on empty string, whitespace strings, and null
+
+-- MINOR IMPROVEMENTS --
+
+* ESys_ValidatorRule: 
+	- moved validator rule classes to their own file to improve PSR-0 autoload support
+
+* API Docs:
+	- adding ESys package docblock annotation wherever missing
+    - build: updating ant build to generate api docs with apigen
+
+
++----------------+
 | version 1.2.8  |
 | 2012-10-03     |
 +----------------+

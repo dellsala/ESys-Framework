@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @package ESys
+ */
 class ESys_Data_Record_FileResource {
 
 

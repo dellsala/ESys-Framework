@@ -1,7 +1,7 @@
 <?php
 
 require_once 'PHPUnit/Framework.php';
-require_once 'ESys/Validator.php';
+require_once 'ESys/ValidatorRule.php';
 
 
 class ESys_ValidatorRule_EmailTest extends PHPUnit_Framework_TestCase {

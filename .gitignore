@@ -1,6 +1,7 @@
 .htaccess
 /nbproject
-/lib/data/conf/config.ini
+/lib/data/conf/*.ini
+/lib/data/conf/*.conf
 /lib/data/log/*
 /lib/data/session/*
 /lib/library/Zend

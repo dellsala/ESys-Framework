@@ -33,7 +33,8 @@
         <delete file="${tempdir}/${exportName}/.gitignore"/>
         <delete dir="${tempdir}/${exportName}/build"/>
         <tar destfile="${outputdir}/${exportName}.tgz" basedir="${tempdir}" compression="gzip"/>
-        <copy file="${tempdir}/${exportName}/install/CHANGELOG" todir="${outputdir}"/>
+        <copy file="${tempdir}/${exportName}/CHANGELOG.txt" todir="${outputdir}"/>
+        <copy file="${tempdir}/${exportName}/LICENSE.txt" todir="${outputdir}"/>
     </target>
 
     <target name="docs" depends="prepdirs">
@@ -41,13 +42,14 @@
         <echo message="building api documentation..."/>
         <exec executable="bash" failonerror="true">
             <arg value="-c" />
-            <arg value="phpdoc -q
-                --title 'ESys Framework' 
-                --output 'HTML:frames:earthli' 
-                --parseprivate 'Off' 
-                --defaultpackagename 'ESys' 
-                -t ${tempdir}/${apiDocsName} 
-                -d ${tempdir}/${exportName}/lib/library" />
+            <arg value="apigen 
+				--source=lib
+				--exclude='*/lib/components/*'
+				--destination=${tempdir}/${apiDocsName}
+				--groups=auto
+				--charset=UTF-8
+				--title='ESys Framework - v${version}'
+				" />
         </exec>
         <available file="${tempdir}/${apiDocsName}/index.html" property="docsGenerated"/>
         <fail message="failed to generate api docs"><condition>
