@@ -1,0 +1,24 @@
+{
+    "name": "esysframework/esysframework",
+    "type": "library",
+    "description": "Mutli-purpose Library and View-Controller Framework",
+    "keywords": ["framework", "esys"],
+    "homepage": "https://github.com/dellsala/ESys-Framework",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Dell Sala",
+            "email": "info@dellsala.com",
+            "homepage": "http://dellsala.com/",
+            "role": "Primary Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "ESys": "lib/library"
+        }
+    }
+}
