@@ -15,7 +15,7 @@ class ESys_AutoLoader {
     public function __construct ($includePathList = null)
     {
         if (! isset($includePathList)) {
-            $libPath = dirname(dirname(dirname(__FILE__)));
+            $libPath = defined('ESYS_LIB_PATH') ? ESYS_LIB_PATH : dirname(dirname(dirname(__FILE__)));
             $includePathList = array(
                 $libPath.'/components',
                 $libPath.'/library',

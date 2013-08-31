@@ -74,7 +74,7 @@ class ESys_Config {
         }
         $coreData = $rawConfigData['ESys_Core'];
         
-        $libPath = substr(dirname(__FILE__), 0, - strlen('/library/ESys'));
+        $libPath = defined('ESYS_LIB_PATH') ? ESYS_LIB_PATH : dirname(dirname(dirname(__FILE__)));
         $this->set('ESys_Core', 'libPath', $libPath);
 
         if (! isset($coreData['htdocsPath'])) {

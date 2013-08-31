@@ -4,18 +4,34 @@
  */
 
 
+
+
+
+
 /**
  *
  */
 class ESys_Bootstrap {
 
+	
+	public static function setLibPath ($path)
+	{
+		if (defined('ESYS_LIB_PATH')) {
+			throw new RuntimeException('ESYS_LIB_PATH is already defined');
+		}
+		define('ESYS_LIB_PATH', $path);
+	}
+	
 
     /**
      * @return string
      */
     public static function getLibPath ()
     {
-        return dirname(dirname(dirname(__FILE__)));
+		if (! defined('ESYS_LIB_PATH')) {
+			self::defineLibPath(dirname(dirname(dirname(__FILE__))));
+		}
+        return ESYS_LIB_PATH;
     }
 
 
