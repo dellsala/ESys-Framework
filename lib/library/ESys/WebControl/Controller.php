@@ -126,7 +126,7 @@ class ESys_WebControl_Controller
      *
      * @return array
      */
-    public function buildResponse ($type, $data = null)
+    protected function buildResponse ($type, $data = null)
     {
         return $this->getResponseFactory()->build($type, $data);
     }
