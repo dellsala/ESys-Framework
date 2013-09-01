@@ -43,6 +43,11 @@ class ESys_WebControl_ResponseFactory {
                 "(): response type {$type} not implemented.", E_USER_ERROR);
             return null;
         }
+        if (! is_array($data)) {
+            $data = array(
+                'content' => $data,
+            );
+        }
         $data = array_merge($this->commonData, $data);
         if ($this->request) {
             $data['request'] = $this->request;

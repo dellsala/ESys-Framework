@@ -95,6 +95,16 @@ class ESys_WebControl_ResponseFactoryTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expectedData, $spyResponse->data,
             'common data was not added to build method data');
     }
+    
+    
+    public function testBuildsResponsesFromScalarContentArgument ()
+    {
+        $expectedContent = 'Hello World';
+        $factory = new ESys_WebControl_ResponseFactory();
+        $response = $factory->build('ok', $expectedContent);
+        $this->assertEquals($expectedContent, $response->getBody());
+    }
+    
 
 }
 
