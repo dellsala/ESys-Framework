@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/Calendar.php';
 
 class ESys_Calendar_MonthTest extends PHPUnit_Framework_TestCase {

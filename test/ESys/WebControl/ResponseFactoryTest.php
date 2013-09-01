@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/WebControl/ResponseFactory.php';
 require_once 'ESys/WebControl/Request.php';
 
@@ -17,7 +17,7 @@ class ESys_WebControl_ResponseFactoryTest extends PHPUnit_Framework_TestCase {
     public function testBuildsOkResponse ()
     {
         $response = $this->responseFactory->build('ok', array('content' => 'Foo'));
-        $this->assertType('ESys_WebControl_Response_Ok', $response, 'response is not of expected type');
+        $this->assertInstanceOf('ESys_WebControl_Response_Ok', $response, 'response is not of expected type');
         $this->assertEquals('Foo', $response->getBody(), 'response does not have expected body');
     }
 
@@ -25,7 +25,7 @@ class ESys_WebControl_ResponseFactoryTest extends PHPUnit_Framework_TestCase {
     public function testBuildsNotFoundResponse ()
     {
         $response = $this->responseFactory->build('notFound', array());
-        $this->assertType('ESys_WebControl_Response_NotFound', $response, 
+        $this->assertInstanceOf('ESys_WebControl_Response_NotFound', $response, 
             'response is not of expected type');
         $this->assertEquals('Resource not found', $response->getBody(), 
             'response does not have expected default body');
@@ -35,7 +35,7 @@ class ESys_WebControl_ResponseFactoryTest extends PHPUnit_Framework_TestCase {
     public function testBuildsErrorResponse ()
     {
         $response = $this->responseFactory->build('error', array());
-        $this->assertType('ESys_WebControl_Response_Error', $response, 
+        $this->assertInstanceOf('ESys_WebControl_Response_Error', $response, 
             'response is not of expected type');
         $this->assertEquals('Unexpected error', $response->getBody(), 
             'response does not have expected default body');
@@ -45,7 +45,7 @@ class ESys_WebControl_ResponseFactoryTest extends PHPUnit_Framework_TestCase {
     public function testBuildsForbiddenResponse ()
     {
         $response = $this->responseFactory->build('forbidden', array());
-        $this->assertType('ESys_WebControl_Response_Forbidden', $response, 
+        $this->assertInstanceOf('ESys_WebControl_Response_Forbidden', $response, 
             'response is not of expected type');
         $this->assertEquals('Forbidden', $response->getBody(), 
             'response does not have expected default body');
@@ -73,7 +73,7 @@ class ESys_WebControl_ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 
         $this->assertTrue(array_key_exists('request', $spyResponse->data), 
             'build data is missing a request');
-        $this->assertType('ESys_WebControl_Request', $spyResponse->data['request'],
+        $this->assertInstanceOf('ESys_WebControl_Request', $spyResponse->data['request'],
             'request in build data is not of expected type');
     }
 

@@ -25,7 +25,7 @@ class ESys_Data_Store_SqlTest extends PHPUnit_Framework_TestCase {
     public function testFetchNewReturnsExpectedDataRecordType ()
     {
         $userStore = new ESys_Data_Store_SqlTest_User_DataStore();
-        $this->assertType('ESys_Data_Store_SqlTest_User', $userStore->fetchNew());
+        $this->assertInstanceOf('ESys_Data_Store_SqlTest_User', $userStore->fetchNew());
     }
 
 

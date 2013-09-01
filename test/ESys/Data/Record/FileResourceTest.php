@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/Data/Record/FileResource.php';
 
 class ESys_Data_Record_FileResourceTest extends PHPUnit_Framework_TestCase {
@@ -182,7 +182,10 @@ class ESys_Data_Record_FileResourceTest extends PHPUnit_Framework_TestCase {
             return;
         }
         $directoryIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($dir),
+            new RecursiveDirectoryIterator(
+                $dir, 
+                FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS
+            ),
             RecursiveIteratorIterator::CHILD_FIRST
         );
         foreach ($directoryIterator as $item) {

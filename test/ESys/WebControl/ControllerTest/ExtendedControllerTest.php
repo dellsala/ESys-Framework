@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/WebControl/Controller.php';
 require_once 'ESys/WebControl/ControllerTest/RequestBuilder.php';
 
@@ -19,7 +19,7 @@ class ESys_WebControl_ControllerTest_ExtendedControllerTest extends PHPUnit_Fram
     {
         $request = $this->requestBuilder->createFromAction(null);
         $response = $this->controller->handleRequest($request);
-        $this->assertType('ESys_WebControl_Response_Ok', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_Ok', $response);
         $this->assertEquals('index action output', $response->getBody());        
     }
 
@@ -28,7 +28,7 @@ class ESys_WebControl_ControllerTest_ExtendedControllerTest extends PHPUnit_Fram
     {
         $request = $this->requestBuilder->createFromAction('test');
         $response = $this->controller->handleRequest($request);
-        $this->assertType('ESys_WebControl_Response_Ok', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_Ok', $response);
         $this->assertEquals('test action output', $response->getBody());
     }
 
@@ -37,7 +37,7 @@ class ESys_WebControl_ControllerTest_ExtendedControllerTest extends PHPUnit_Fram
     {
         $request = $this->requestBuilder->createFromAction('badaction');
         $response = $this->controller->handleRequest($request);
-        $this->assertType('ESys_WebControl_Response_NotFound', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_NotFound', $response);
     }
 
 
@@ -45,7 +45,7 @@ class ESys_WebControl_ControllerTest_ExtendedControllerTest extends PHPUnit_Fram
     {
         $request = $this->requestBuilder->createFromAction('my-action');
         $response = $this->controller->handleRequest($request);
-        $this->assertType('ESys_WebControl_Response_Ok', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_Ok', $response);
     }
     
 
@@ -57,7 +57,7 @@ class ESys_WebControl_ControllerTest_ExtendedControllerTest extends PHPUnit_Fram
         $request = $this->requestBuilder->createFromAction($action);
         $forbiddenController = new ESys_WebControl_ControllerTest_ExtendedControllerTest_ForbiddenController();
         $response = $forbiddenController->handleRequest($request);
-        $this->assertType('ESys_WebControl_Response_Forbidden', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_Forbidden', $response);
     }
 
     

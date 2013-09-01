@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/Validator.php';
 
 class ESys_Validator_ErrorReportTest extends PHPUnit_Framework_TestCase {

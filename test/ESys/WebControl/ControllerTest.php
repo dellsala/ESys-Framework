@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/WebControl/Controller.php';
 require_once 'ESys/WebControl/ControllerTest/RequestBuilder.php';
 require_once 'ESys/WebControl/ResponseFactory.php';
@@ -19,7 +19,7 @@ class ESys_WebControl_ControllerTest extends PHPUnit_Framework_TestCase {
     {
         $request = $this->requestBuilder->createFromAction(null);
         $response = $this->controller->handleRequest($request);
-        $this->assertType('ESys_WebControl_Response_NotFound', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_NotFound', $response);
     }
 
 
@@ -27,7 +27,7 @@ class ESys_WebControl_ControllerTest extends PHPUnit_Framework_TestCase {
     {
         $request = $this->requestBuilder->createFromAction('badaction');
         $response = $this->controller->handleRequest($request);
-        $this->assertType('ESys_WebControl_Response_NotFound', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_NotFound', $response);
     }
 
 
@@ -38,7 +38,7 @@ class ESys_WebControl_ControllerTest extends PHPUnit_Framework_TestCase {
     {
         $request = $this->requestBuilder->createFromAction($action);
         $response = $this->controller->handleRequest($request);
-        $this->assertType('ESys_WebControl_Response_NotFound', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_NotFound', $response);
     }
 
 
@@ -58,7 +58,7 @@ class ESys_WebControl_ControllerTest extends PHPUnit_Framework_TestCase {
         $this->controller->setResponseFactory(
             new ESys_WebControl_ControllerTest_CustomResponseFactory());
         $response = $this->controller->handleRequest($request);
-        $this->assertType('ESys_WebControl_ControllerTest_CustomNotFoundResponse', $response);
+        $this->assertInstanceOf('ESys_WebControl_ControllerTest_CustomNotFoundResponse', $response);
     }
 
 

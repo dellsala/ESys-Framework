@@ -1,12 +1,12 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/AutoLoader.php';
 
 
 class ESys_AutoLoaderTest extends PHPUnit_Framework_TestCase {
 
-
+	protected $initialAutoloadList = array();
     protected $autoLoader = null;
 
 
@@ -83,8 +83,10 @@ class ESys_AutoLoaderTest extends PHPUnit_Framework_TestCase {
 
     public function tearDown ()
     {
-        $this->autoLoader->unregister();
-    }
+		if ($this->autoLoader) {
+			$this->autoLoader->unregister();
+		}
+	}
 
 
     protected function assertClassIsNotLoadable ($class)

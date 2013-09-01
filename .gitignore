@@ -6,3 +6,4 @@
 /lib/data/session/*
 /lib/library/Zend
 /www/dev
+/test/bdd-style-docs.txt

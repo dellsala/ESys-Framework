@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/WebControl/FrontController.php';
 
 class ESys_WebControl_FrontControllerTest extends PHPUnit_Framework_TestCase {
@@ -21,7 +21,7 @@ class ESys_WebControl_FrontControllerTest extends PHPUnit_Framework_TestCase {
     public function testDefaultInvalidActionBehavior ()
     {
         $response = $this->frontController->handleRequest($this->httpGetData, array(), array());
-        $this->assertType('ESys_WebControl_Response_NotFound', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_NotFound', $response);
     }
 
 
@@ -31,7 +31,7 @@ class ESys_WebControl_FrontControllerTest extends PHPUnit_Framework_TestCase {
             new ESys_WebControl_FrontControllerTest_CustomResponseFactory()
         );
         $response = $this->frontController->handleRequest($this->httpGetData, array(), array());
-        $this->assertType('ESys_WebControl_Response_NotFound', $response);
+        $this->assertInstanceOf('ESys_WebControl_Response_NotFound', $response);
         $this->assertEquals(
             ESys_WebControl_FrontControllerTest_CustomResponseFactory::NOT_FOUND_MESSAGE,
             $response->getBody()

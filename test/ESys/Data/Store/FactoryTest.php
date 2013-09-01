@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/Data/Store/Factory.php';
 
 class ESys_Data_Store_FactoryTest extends PHPUnit_Framework_TestCase {

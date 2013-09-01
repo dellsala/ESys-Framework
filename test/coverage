@@ -1,13 +1,8 @@
 #!/bin/bash
 
-SCRIPTPATH=`which $0`
-TESTDIRECTORY=`dirname $SCRIPTPATH`;
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cd $TESTDIRECTORY;
+[[ -n "$1" ]] && TEST_TARGET="$DIR/$1" || TEST_TARGET="$DIR"
 
-TESTDIRECTORY=`pwd`
-
-phpunit --colors --bootstrap $TESTDIRECTORY/_bootstrap.php \
-    --coverage-html $TESTDIRECTORY/coverage-report \
-    $TESTDIRECTORY/MasterTestSuite.php
+phpunit --colors --coverage-html $DIR/coverage-report --bootstrap $DIR/_bootstrap.php $TEST_TARGET
 

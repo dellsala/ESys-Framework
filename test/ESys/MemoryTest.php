@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+
 require_once 'ESys/Memory.php';
 
 class ESys_MemoryTest extends PHPUnit_Framework_TestCase {
