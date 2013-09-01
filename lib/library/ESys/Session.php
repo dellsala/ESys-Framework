@@ -107,6 +107,17 @@ class ESys_Session {
     
     
     /**
+     * @param string $package
+     * @return void
+     */
+    public function deletePackage ($package)
+    {
+        $this->lazySessionStart();
+        unset($_SESSION[__CLASS__][$package]);
+    }
+    
+    
+    /**
      * @return string
      */
     public function getName ()
