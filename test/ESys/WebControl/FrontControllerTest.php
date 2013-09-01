@@ -92,8 +92,7 @@ class ESys_WebControl_FrontControllerTest extends PHPUnit_Framework_TestCase {
             '/path/to/controller', 
             'ESys_WebControl_FrontController_SpyController'
         );
-        $this->assertFalse(class_exists('ESys_WebControl_FrontController_SpyController'),
-            "class to be loaded from file should not already exist");
+        $this->assertClassDoesNotExist('ESys_WebControl_FrontController_SpyController');
         $response = $this->frontController->handleRequest($this->httpGetData, array(), array());
         $this->assertEquals(
             new ESys_WebControl_Request(array(
@@ -118,6 +117,20 @@ class ESys_WebControl_FrontControllerTest extends PHPUnit_Framework_TestCase {
         $this->setExpectedException('Exception');
         $response = $this->frontController->handleRequest($this->httpGetData, array(), array());
     }
+    
+    
+    protected function assertClassDoesNotExist ($class)
+    {
+        $autoloadList = spl_autoload_functions();
+        foreach ($autoloadList as $autoloader) {
+            spl_autoload_unregister($autoloader);
+        }
+        $this->assertFalse(class_exists($class), "class should not already exist");
+        foreach ($autoloadList as $autoloader) {
+            spl_autoload_register($autoloader);
+        }
+    }
+    
 
 
 }
