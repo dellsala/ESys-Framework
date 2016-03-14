@@ -1,4 +1,28 @@
 +----------------+
+| version 1.2.11 |
+| 2016-03-14     |
++----------------+
+
+-- MINOR RELEASE --
+
+* ESYS_LIB_PATH:
+	- new constant that defines the path to the esys lib directory 
+	- useful for when the framework is installed with composer 	
+	- updating all calculations of a relative lib path to check for ESYS_LIB_PATH constant first
+
+* ESys_Session: 
+	- new deletePackage method. deletes all entries within a package. fixes #7
+
+* ESys_WebControl: 
+	- Controller::buildResponse is now protected. fixes #10
+	- FrontControllerTest: fixes issue related to new testing autoloader.
+	- ResponseFactory: build method can accept a single content argument instead of an array of values. fixes #9
+
+* Unit Tests:
+	updating unit tests to work with phpunit 3.7
+
+
++----------------+
 | version 1.2.10 |
 | 2013-08-29     |
 +----------------+
