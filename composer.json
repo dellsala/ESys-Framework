@@ -20,5 +20,7 @@
         "psr-0": {
             "ESys": "lib/library"
         }
-    }
+    },
+    "include-path": ["lib/library"]
+    
 }
